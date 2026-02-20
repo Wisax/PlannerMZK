@@ -255,8 +255,10 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 <div class="notif" id="notif"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
 (function(){
+  emailjs.init('u6CM1lxeP5MJgqr0j');
   // CURSOR
   var cu = document.getElementById('cur');
   var cu2 = document.getElementById('cur2');
@@ -518,39 +520,37 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     notify('PDF telecharge !');
   };
 
-  // EMAIL CLIENT — recap de ses reponses
-  document.getElementById('mailClientBtn').onclick = function() {
-    var lines = [
-      'Bonjour ' + (brief.nom ? brief.nom.split(' ')[0] : '') + ',',
-      '',
-      'Merci pour votre demande. Voici le recap de votre projet tel que nous l\'avons enregistre :',
-      '',
-      '— Projet : ' + (brief.projet||'—'),
-      '— Prestation : ' + (brief.type_presta||'—'),
-      brief.details_tournage ? '— Details tournage : ' + brief.details_tournage : '',
-      brief.lieu ? '— Lieu : ' + brief.lieu : '',
-      brief.nb_jours ? '— Duree tournage : ' + brief.nb_jours : '',
-      brief.sous_prestations ? '— Post-production : ' + brief.sous_prestations : '',
-      brief.format_source ? '— Format rushes : ' + brief.format_source : '',
-      '— Ratio : ' + (brief.ratio||'—'),
-      '— Qualite : ' + (brief.qualite||'—'),
-      '— Diffusion : ' + (brief.diffusion||'—'),
-      '— Duree contenu : ' + (brief.duree||'—'),
-      '— Deadline : ' + (brief.deadline||'—'),
-      brief.refs ? '— References : ' + brief.refs : '',
-      brief.extra ? '— Infos complementaires : ' + brief.extra : '',
-      '',
-      'Sofiane vous recontactera rapidement avec un devis detaille.',
-      '',
-      'MZK Creation — mzk-creation.fr'
-    ].filter(function(l){ return l !== null && l !== undefined && l !== ''; }).join('\n');
-    var sub = encodeURIComponent('[MZK Creation] Recap de votre projet — Ref. ' + REF);
-    var body = encodeURIComponent(lines);
-    window.open('mailto:' + (brief.email||'') + '?subject=' + sub + '&body=' + body);
-    notify('Email client ouvert !');
+  // EMAIL CLIENT via EmailJS
+  document.getElementById('mailClientBtn').onclick = async function() {
+    var btn = document.getElementById('mailClientBtn');
+    btn.textContent = 'Envoi...';
+    btn.disabled = true;
+    try {
+      await emailjs.send('service_drxsh2d', 'template_5cpc9y2', {
+        ref: REF,
+        date: new Date().toLocaleDateString('fr-FR'),
+        client_prenom: (brief.nom||'').split(' ')[0],
+        client_nom: brief.nom||'—',
+        client_email: brief.email||'—',
+        client_telephone: brief.telephone||'—',
+        client_societe: brief.societe||'Particulier',
+        projet_description: brief.projet||'—',
+        projet_type: brief.type_presta||'—',
+        projet_ratio: brief.ratio||'—',
+        projet_qualite: brief.qualite||'—',
+        projet_diffusion: brief.diffusion||'—',
+        projet_duree: brief.duree||'—',
+        projet_deadline: brief.deadline||'—'
+      });
+      notify('Email envoye au client !');
+    } catch(e) {
+      notify('Erreur envoi client : ' + e.text);
+    }
+    btn.textContent = 'Email au client';
+    btn.disabled = false;
   };
 
-  // EMAIL SOFIANE — brief complet + estimation IA
+  // EMAIL SOFIANE via EmailJS + estimation IA
   document.getElementById('mailSofianeBtn').onclick = async function() {
     var btn = document.getElementById('mailSofianeBtn');
     btn.textContent = 'Calcul IA...';
@@ -569,81 +569,81 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
       'Duree contenu : ' + (brief.duree||'—') + '\n' +
       'Deadline : ' + (brief.deadline||'—') + '\n' +
       'Budget annonce par le client : ' + (brief.budget||'—') + '\n\n' +
-      'Tarifs du prestataire : Tournage = 800 EUR/jour (100 EUR/h). Post-production = 400 EUR/jour (50 EUR/h). Ces tarifs peuvent etre revus a la baisse selon le projet.\n\n' +
+      'Tarifs : Tournage = 800 EUR/jour (100 EUR/h). Post-production = 400 EUR/jour (50 EUR/h). Tarifs pouvant etre revus a la baisse.\n\n' +
       'Reponds en francais avec ce format exact (rien d\'autre) :\n' +
       'ESTIMATION_TOURNAGE: X EUR (Y jours)\n' +
       'ESTIMATION_POSTPROD: X EUR (Y jours)\n' +
       'TOTAL_ESTIME: X EUR\n' +
-      'BUDGET_CLIENT: ' + (brief.budget||'—') + '\n' +
-      'ANALYSE_BUDGET: [2-3 phrases max : le budget du client est-il realiste ? trop bas ? correct ? Sois direct et honnete pour aider Sofiane a negocier.]\n' +
-      'COMPLEXITE: [Simple / Moyenne / Elevee]\n' +
-      'RECOMMANDATION: [1 phrase sur comment aborder la nego avec ce client]';
+      'COMPLEXITE: Simple ou Moyenne ou Elevee\n' +
+      'VERDICT: honnete ou trop_bas ou correct\n' +
+      'ANALYSE_BUDGET: [2-3 phrases directes sur le budget]\n' +
+      'RECOMMANDATION: [1 phrase sur comment negocier]';
 
-    var estimPayload = {
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'user', content: promptEstim }],
-      temperature: 0.4,
-      max_tokens: 400
-    };
-
-    var estimation = '';
+    var estim = { tournage:'—', postprod:'—', total:'—', complexite:'—', analyse:'—', reco:'—', verdict:'correct' };
     try {
       var res = await fetch(GROQ_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
-        body: JSON.stringify(estimPayload)
+        body: JSON.stringify({ model:'llama-3.3-70b-versatile', messages:[{role:'user',content:promptEstim}], temperature:0.4, max_tokens:400 })
       });
       var data = await res.json();
       if (data.error) throw new Error(data.error.message);
-      estimation = data.choices[0].message.content;
+      var txt = data.choices[0].message.content;
+      var g = function(k){ var m = txt.match(new RegExp(k+':\\s*(.+)')); return m ? m[1].trim() : '—'; };
+      estim.tournage = g('ESTIMATION_TOURNAGE');
+      estim.postprod = g('ESTIMATION_POSTPROD');
+      estim.total = g('TOTAL_ESTIME');
+      estim.complexite = g('COMPLEXITE');
+      estim.verdict = g('VERDICT');
+      estim.analyse = g('ANALYSE_BUDGET');
+      estim.reco = g('RECOMMANDATION');
     } catch(e) {
-      estimation = 'Erreur estimation IA : ' + e.message;
+      estim.analyse = 'Erreur IA : ' + e.message;
     }
 
-    var lines = [
-      '==========================================',
-      'NOUVEAU PROJET — MZK CREATION',
-      'Ref. ' + REF + ' — ' + new Date().toLocaleDateString('fr-FR'),
-      '==========================================',
-      '',
-      '[ CLIENT ]',
-      'Nom           : ' + (brief.nom||'—'),
-      'Telephone     : ' + (brief.telephone||'—'),
-      'Email         : ' + (brief.email||'—'),
-      'Societe       : ' + (brief.societe||'Particulier'),
-      '',
-      '[ PROJET ]',
-      'Description   : ' + (brief.projet||'—'),
-      'Prestation    : ' + (brief.type_presta||'—'),
-      brief.details_tournage ? 'Det. tournage : ' + brief.details_tournage : '',
-      brief.lieu ? 'Lieu          : ' + brief.lieu : '',
-      brief.nb_jours ? 'Jours         : ' + brief.nb_jours : '',
-      brief.sous_prestations ? 'Post-prod     : ' + brief.sous_prestations : '',
-      brief.format_source ? 'Format rushes : ' + brief.format_source : '',
-      'Ratio         : ' + (brief.ratio||'—'),
-      'Qualite       : ' + (brief.qualite||'—'),
-      'Diffusion     : ' + (brief.diffusion||'—'),
-      'Duree         : ' + (brief.duree||'—'),
-      'Deadline      : ' + (brief.deadline||'—'),
-      'BUDGET CLIENT : ' + (brief.budget||'—'),
-      brief.refs ? 'References    : ' + brief.refs : '',
-      brief.extra ? 'Infos sup.    : ' + brief.extra : '',
-      '',
-      '==========================================',
-      '[ ESTIMATION IA — CONFIDENTIEL ]',
-      '==========================================',
-      estimation,
-      '',
-      '==========================================',
-      'MZK Creation — mzk-creation.fr'
-    ].filter(function(l){ return l !== null && l !== undefined && l !== ''; }).join('\n');
+    // Classe verdict pour le template
+    var verdictClass = estim.verdict === 'honnete' ? 'ok' : (estim.verdict === 'trop_bas' ? 'low' : 'meh');
+    var verdictTag = estim.verdict === 'honnete' ? 'Budget honnete' : (estim.verdict === 'trop_bas' ? 'Budget trop bas' : 'Budget correct');
 
-    var sub = encodeURIComponent('[MZK INTERNE] Brief + Estimation — ' + (brief.nom||'Client') + ' — ' + REF);
-    var body = encodeURIComponent(lines);
-    window.open('mailto:' + MAIL + '?subject=' + sub + '&body=' + body);
+    btn.textContent = 'Envoi...';
+    try {
+      await emailjs.send('service_drxsh2d', 'template_lx0ilon', {
+        ref: REF,
+        date: new Date().toLocaleDateString('fr-FR'),
+        client_nom: brief.nom||'—',
+        client_email: brief.email||'—',
+        client_telephone: brief.telephone||'—',
+        client_societe: brief.societe||'Particulier',
+        projet_description: brief.projet||'—',
+        projet_type: brief.type_presta||'—',
+        projet_details_tournage: brief.details_tournage||'—',
+        projet_lieu: brief.lieu||'—',
+        projet_nb_jours: brief.nb_jours||'—',
+        projet_sous_prestations: brief.sous_prestations||'—',
+        projet_format_source: brief.format_source||'—',
+        projet_ratio: brief.ratio||'—',
+        projet_qualite: brief.qualite||'—',
+        projet_diffusion: brief.diffusion||'—',
+        projet_duree: brief.duree||'—',
+        projet_deadline: brief.deadline||'—',
+        projet_budget: brief.budget||'—',
+        projet_refs: brief.refs||'—',
+        projet_extra: brief.extra||'—',
+        estim_tournage: estim.tournage,
+        estim_postprod: estim.postprod,
+        estim_total: estim.total,
+        estim_complexite: estim.complexite,
+        estim_recommandation: estim.reco,
+        verdict_class: verdictClass,
+        verdict_tag: verdictTag,
+        verdict_analyse: estim.analyse
+      });
+      notify('Email envoye a Sofiane !');
+    } catch(e) {
+      notify('Erreur envoi : ' + (e.text||e.message));
+    }
     btn.textContent = 'Envoyer a Sofiane';
     btn.disabled = false;
-    notify('Email Sofiane ouvert !');
   };
 
   function notify(msg) {
