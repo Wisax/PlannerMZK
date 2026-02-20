@@ -321,7 +321,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   async function callGroq(userMsg) {
     history.push({ role: 'user', content: userMsg });
     var payload = {
-      model: 'llama-3.1-8b-instant',
+      model: 'llama-3.3-70b-versatile',
       temperature: 0.7,
       max_tokens: 500,
       messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(history)
