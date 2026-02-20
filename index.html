@@ -376,11 +376,34 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   function showDevisBtn() {
     var d = document.createElement('div');
     d.className = 'msg b';
-    d.innerHTML = '<div class="ico">&#129302;</div><div class="bub" style="background:transparent;border:none;padding:0">' +
-      '<button class="bmain" id="devisBtn" style="font-size:.72rem;padding:.8rem 1.4rem;border:none;cursor:pointer;">Voir mon devis preliminaire</button></div>';
+    d.innerHTML = '<div class="ico">&#129302;</div><div class="bub" style="background:transparent;border:none;padding:0;display:flex;flex-direction:column;gap:.6rem">' +
+      '<button class="bmain" id="devisBtn" style="font-size:.72rem;padding:.8rem 1.4rem;border:none;cursor:pointer;">Voir mon devis preliminaire</button>' +
+      '<button id="newProjetBtn" style="font-size:.68rem;padding:.65rem 1.2rem;font-family:Space Mono,monospace;letter-spacing:.08em;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .2s;">+ Nouveau projet</button>' +
+      '</div>';
     msgsEl.appendChild(d);
     msgsEl.scrollTop = msgsEl.scrollHeight;
     document.getElementById('devisBtn').onclick = showDevis;
+    document.getElementById('newProjetBtn').onclick = resetConv;
+    document.getElementById('newProjetBtn').onmouseover = function(){ this.style.borderColor='var(--accent)'; this.style.color='var(--white)'; };
+    document.getElementById('newProjetBtn').onmouseout = function(){ this.style.borderColor='rgba(255,255,255,.1)'; this.style.color='var(--muted)'; };
+  }
+
+  function resetConv() {
+    history = [];
+    brief = {};
+    convDone = false;
+    REF = 'MZK-' + Date.now().toString().slice(-6);
+    msgsEl.innerHTML = '';
+    inpEl.value = '';
+    sndEl.disabled = false;
+    (async function() {
+      await sleep(300);
+      showTyping();
+      var intro = await callGroq('START');
+      hideTyping();
+      addMsg(intro, 'b');
+      inpEl.focus();
+    })();
   }
 
   // INIT
