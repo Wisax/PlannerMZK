@@ -278,7 +278,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   // CONFIG
   var GROQ_KEY = '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';
   var GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-  var MAIL = 'sofiane.crea@gmail.com';
+  var MAIL = 'sofiane.crea' + '@' + 'gmail.com';
   var REF = 'MZK-' + Date.now().toString().slice(-6);
 
   var msgsEl = document.getElementById('msgs');
@@ -522,7 +522,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     doc.setFontSize(8); doc.setTextColor(A[0],A[1],A[2]); doc.text('À définir par Sofiane',142,y+2);
     y+=18;
     doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(MU[0],MU[1],MU[2]);
-    doc.text('Devis préliminaire non contractuel. MZK Création — sofiane.crea@gmail.com', 20, y);
+    doc.text('Devis préliminaire non contractuel. MZK Création — ' + ('sofiane.crea' + '@' + 'gmail.com'), 20, y);
     doc.setFillColor(A[0],A[1],A[2]); doc.rect(0,292,210,2,'F');
     doc.save('Devis-' + REF + '.pdf');
     notify('PDF téléchargé !');
