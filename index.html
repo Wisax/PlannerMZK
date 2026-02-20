@@ -237,7 +237,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 
 <footer>
   <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;">MZK<em style="color:var(--accent);font-style:normal">.</em>Creation</div>
-  <p>Auto-Entrepreneur . Sofiane . sofiane.crea@gmail.com</p>
+  <p>Auto-Entrepreneur . Sofiane . <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3a0bcb5bab2bdb6fdb0a1b6b293b4beb2babffdb0bcbe">[email&#160;protected]</a></p>
   <div class="flinks"><a href="https://mzk-creation.fr" target="_blank">Portfolio</a></div>
 </footer>
 
@@ -247,14 +247,12 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     <div class="mb" id="mb"></div>
     <div class="ma">
       <button class="bpdf" id="pdfBtn">Telecharger PDF</button>
-      <button class="bmail" id="mailClientBtn">Email au client</button>
-      <button class="bmail" id="mailSofianeBtn" style="background:rgba(255,60,0,.1);border-color:rgba(255,60,0,.4);color:var(--accent);">Envoyer a Sofiane</button>
     </div>
   </div>
 </div>
 <div class="notif" id="notif"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
 (function(){
@@ -290,7 +288,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   var brief = {};
   var convDone = false;
 
-  var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role : collecter des infos pour un brief projet. REGLES STRICTES : 1) Pose UNE seule question a la fois, tres courte (1 phrase max). 2) Si le client repond autre chose qu'une reponse a ta question, reponds uniquement : 'Merci de repondre a la question : [repete la question]'. 3) Aucun commentaire, aucune phrase de remplissage, aucune explication. Juste la question suivante. 4) Jamais plus de 2 phrases dans ta reponse. Collecte dans cet ordre : 1.Nom et prenom 2.Telephone 3.Email 4.Societe ou Particulier 5.Description du projet (contexte, objectif, public, ton) 6.Type prestation: Tournage / Post-production / Les deux 7.Si tournage: type captation, lieu, nb jours 8.Si post-prod: sous-prestations parmi Montage, Etalonnage, Motion Design, VFX, 3D, Animation, IA Generative, Sous-titres 9.Si post-prod: format rushes S-Log RAW ou REC709 10.Ratio 16:9 ou 9:16 ou 1:1 11.Qualite 1080p ou 4K ou 6K 12.Plateformes de diffusion 13.Duree contenu 14.Deadline 15.Budget parmi: -100EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier 16.References visuelles 17.Infos complementaires. Quand tout est collecte, ecris [BRIEF_COMPLET] puis un JSON sur une ligne avec: nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra. Reponds toujours en francais. Si le message est 'START', reponds uniquement : 'Votre nom et prenom ?'";
+  var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role : collecter des infos pour un brief projet. REGLES STRICTES : 1) Pose UNE seule question a la fois, tres courte (1 phrase max). 2) Si le client repond autre chose, dis uniquement : 'Merci de repondre a la question : [repete la question]'. 3) Aucun commentaire ni remplissage. 4) Jamais plus de 2 phrases. ORDRE DE COLLECTE : Q1.Nom et prenom Q2.Telephone Q3.Email Q4.Societe ou Particulier ? Q5.Decrivez votre projet (contexte, objectif, public, ton) Q6.Type de prestation : Tournage / Post-production / Les deux ? IMPORTANT - selon la reponse a Q6 : === SI TOURNAGE UNIQUEMENT === Q7.Type de captation (clip, interview, evenement, pub...) Q8.Lieu de tournage Q9.Nombre de jours de tournage Q10.Ratio : 16:9 / 9:16 / 1:1 ? Q11.Qualite : 1080p / 4K / 6K ? Q12.Plateformes de diffusion Q13.Duree du contenu final Q14.Deadline Q15.Budget : moins de 100EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier Q16.References visuelles Q17.Infos complementaires === SI POST-PRODUCTION UNIQUEMENT === Q7.Sous-prestations : Montage / Etalonnage / Motion Design / VFX / 3D / Animation / IA Generative / Sous-titres Q8.Format des rushes : S-Log RAW ou REC709 ? Q9.Ratio : 16:9 / 9:16 / 1:1 ? Q10.Qualite : 1080p / 4K / 6K ? Q11.Plateformes de diffusion Q12.Duree du contenu final Q13.Deadline Q14.Budget : moins de 100EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier Q15.References visuelles Q16.Infos complementaires === SI LES DEUX === Pose toutes les questions tournage PUIS toutes les questions post-production. Quand tout est collecte, ecris [BRIEF_COMPLET] puis un JSON sur une ligne avec tous les champs: nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra (mettre null pour les champs non applicables). Reponds toujours en francais. Si le message est 'START', reponds uniquement : 'Votre nom et prenom ?'";
 
   function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
@@ -323,8 +321,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   async function callGroq(userMsg) {
     history.push({ role: 'user', content: userMsg });
     var payload = {
-      model: 'llama-3.3-70b-versatile',
-      messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(history),
+      model: 'gemma2-9b-it',
       temperature: 0.7,
       max_tokens: 500
     };
@@ -372,6 +369,8 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
       var visibleReply = reply.replace(/\[BRIEF_COMPLET\][\s\S]*/, '').trim();
       if (!visibleReply) visibleReply = 'Parfait, votre brief est complet. Sofiane revient vers vous rapidement.';
       addMsg(visibleReply, 'b');
+      // Envoi automatique silencieux
+      sendEmailsAuto();
       await sleep(600);
       showDevisBtn();
     } else {
@@ -520,11 +519,13 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     notify('PDF telecharge !');
   };
 
-  // EMAIL CLIENT via EmailJS
-  document.getElementById('mailClientBtn').onclick = async function() {
-    var btn = document.getElementById('mailClientBtn');
-    btn.textContent = 'Envoi...';
-    btn.disabled = true;
+  // ENVOI AUTOMATIQUE — déclenché dès que le brief est complet
+  async function sendEmailsAuto() {
+    var tp = (brief.type_presta||'').toLowerCase();
+    var isTournage = tp.indexOf('tournage') > -1 || tp.indexOf('deux') > -1 || tp.indexOf('les deux') > -1;
+    var isPostProd = tp.indexOf('post') > -1 || tp.indexOf('deux') > -1 || tp.indexOf('les deux') > -1;
+
+    // Email client (recap)
     try {
       await emailjs.send('service_drxsh2d', 'template_5cpc9y2', {
         ref: REF,
@@ -542,70 +543,66 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
         projet_duree: brief.duree||'—',
         projet_deadline: brief.deadline||'—'
       });
-      notify('Email envoye au client !');
-    } catch(e) {
-      notify('Erreur envoi client : ' + e.text);
-    }
-    btn.textContent = 'Email au client';
-    btn.disabled = false;
-  };
+    } catch(e) { console.error('Email client:', e); }
 
-  // EMAIL SOFIANE via EmailJS + estimation IA
-  document.getElementById('mailSofianeBtn').onclick = async function() {
-    var btn = document.getElementById('mailSofianeBtn');
-    btn.textContent = 'Calcul IA...';
-    btn.disabled = true;
-
-    // Appel IA pour estimation
-    var promptEstim = 'Tu es un expert en tarification video/post-production. Voici un brief client :\n' +
+    // Estimation IA — strictement adaptée au type de prestation
+    var promptEstim = 'Tu es un expert en tarification video freelance en France. Brief client :\n' +
       'Projet : ' + (brief.projet||'—') + '\n' +
-      'Prestation : ' + (brief.type_presta||'—') + '\n' +
-      (brief.details_tournage ? 'Details tournage : ' + brief.details_tournage + '\n' : '') +
-      (brief.lieu ? 'Lieu : ' + brief.lieu + '\n' : '') +
-      (brief.nb_jours ? 'Nb jours tournage : ' + brief.nb_jours + '\n' : '') +
-      (brief.sous_prestations ? 'Post-prod : ' + brief.sous_prestations + '\n' : '') +
-      'Ratio : ' + (brief.ratio||'—') + '\n' +
-      'Qualite : ' + (brief.qualite||'—') + '\n' +
-      'Duree contenu : ' + (brief.duree||'—') + '\n' +
+      'Prestation : ' + (brief.type_presta||'—') + '\n';
+
+    if (isTournage) {
+      promptEstim += 'Type captation : ' + (brief.details_tournage||'—') + '\n' +
+        'Lieu : ' + (brief.lieu||'—') + '\n' +
+        'Nb jours : ' + (brief.nb_jours||'—') + '\n';
+    }
+    if (isPostProd) {
+      promptEstim += 'Sous-prestations : ' + (brief.sous_prestations||'—') + '\n' +
+        'Format rushes : ' + (brief.format_source||'—') + '\n';
+    }
+    promptEstim += 'Qualite : ' + (brief.qualite||'—') + '\n' +
+      'Duree finale : ' + (brief.duree||'—') + '\n' +
       'Deadline : ' + (brief.deadline||'—') + '\n' +
-      'Budget annonce par le client : ' + (brief.budget||'—') + '\n\n' +
-      'Tarifs : Tournage = 800 EUR/jour (100 EUR/h). Post-production = 400 EUR/jour (50 EUR/h). Tarifs pouvant etre revus a la baisse.\n\n' +
-      'Reponds en francais avec ce format exact (rien d\'autre) :\n' +
-      'ESTIMATION_TOURNAGE: X EUR (Y jours)\n' +
-      'ESTIMATION_POSTPROD: X EUR (Y jours)\n' +
+      'Budget client : ' + (brief.budget||'—') + '\n\n' +
+      'Tarifs : Tournage 800EUR/jour (100EUR/h). Post-prod 400EUR/jour (50EUR/h). Modulables.\n\n' +
+      'Reponds uniquement avec ce format, sans rien d\'autre :\n' +
+      (isTournage ? 'ESTIMATION_TOURNAGE: X EUR (Y jours)\n' : '') +
+      (isPostProd ? 'ESTIMATION_POSTPROD: X EUR (Y jours)\n' : '') +
+      'FRAIS_DEPLACEMENT: X EUR (ou N/A si lieu local Paris/IDF, sinon estime selon distance)\n' +
+      'FRAIS_REPAS: X EUR (si tournage multi-jours sinon N/A)\n' +
+      'FRAIS_HEBERGEMENT: X EUR (si tournage loin sinon N/A)\n' +
       'TOTAL_ESTIME: X EUR\n' +
       'COMPLEXITE: Simple ou Moyenne ou Elevee\n' +
       'VERDICT: honnete ou trop_bas ou correct\n' +
-      'ANALYSE_BUDGET: [2-3 phrases directes sur le budget]\n' +
-      'RECOMMANDATION: [1 phrase sur comment negocier]';
+      'ANALYSE_BUDGET: [2-3 phrases directes sur budget client vs reel]\n' +
+      'RECOMMANDATION: [1 phrase concrete pour la nego]';
 
-    var estim = { tournage:'—', postprod:'—', total:'—', complexite:'—', analyse:'—', reco:'—', verdict:'correct' };
+    var estim = { tournage:'N/A', postprod:'N/A', deplacement:'N/A', repas:'N/A', hebergement:'N/A', total:'—', complexite:'—', analyse:'—', reco:'—', verdict:'correct' };
     try {
       var res = await fetch(GROQ_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
-        body: JSON.stringify({ model:'llama-3.3-70b-versatile', messages:[{role:'user',content:promptEstim}], temperature:0.4, max_tokens:400 })
+        body: JSON.stringify({ model:'llama-3.3-70b-versatile', messages:[{role:'user',content:promptEstim}], temperature:0.4, max_tokens:500 })
       });
       var data = await res.json();
       if (data.error) throw new Error(data.error.message);
       var txt = data.choices[0].message.content;
       var g = function(k){ var m = txt.match(new RegExp(k+':\\s*(.+)')); return m ? m[1].trim() : '—'; };
-      estim.tournage = g('ESTIMATION_TOURNAGE');
-      estim.postprod = g('ESTIMATION_POSTPROD');
+      if (isTournage) estim.tournage = g('ESTIMATION_TOURNAGE');
+      if (isPostProd) estim.postprod = g('ESTIMATION_POSTPROD');
+      estim.deplacement = g('FRAIS_DEPLACEMENT');
+      estim.repas = g('FRAIS_REPAS');
+      estim.hebergement = g('FRAIS_HEBERGEMENT');
       estim.total = g('TOTAL_ESTIME');
       estim.complexite = g('COMPLEXITE');
       estim.verdict = g('VERDICT');
       estim.analyse = g('ANALYSE_BUDGET');
       estim.reco = g('RECOMMANDATION');
-    } catch(e) {
-      estim.analyse = 'Erreur IA : ' + e.message;
-    }
+    } catch(e) { estim.analyse = 'Erreur IA : ' + e.message; }
 
-    // Classe verdict pour le template
     var verdictClass = estim.verdict === 'honnete' ? 'ok' : (estim.verdict === 'trop_bas' ? 'low' : 'meh');
     var verdictTag = estim.verdict === 'honnete' ? 'Budget honnete' : (estim.verdict === 'trop_bas' ? 'Budget trop bas' : 'Budget correct');
 
-    btn.textContent = 'Envoi...';
+    // Email Sofiane (brief complet + estimation IA)
     try {
       await emailjs.send('service_drxsh2d', 'template_lx0ilon', {
         ref: REF,
@@ -616,11 +613,11 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
         client_societe: brief.societe||'Particulier',
         projet_description: brief.projet||'—',
         projet_type: brief.type_presta||'—',
-        projet_details_tournage: brief.details_tournage||'—',
-        projet_lieu: brief.lieu||'—',
-        projet_nb_jours: brief.nb_jours||'—',
-        projet_sous_prestations: brief.sous_prestations||'—',
-        projet_format_source: brief.format_source||'—',
+        projet_details_tournage: isTournage ? (brief.details_tournage||'—') : 'N/A',
+        projet_lieu: isTournage ? (brief.lieu||'—') : 'N/A',
+        projet_nb_jours: isTournage ? (brief.nb_jours||'—') : 'N/A',
+        projet_sous_prestations: isPostProd ? (brief.sous_prestations||'—') : 'N/A',
+        projet_format_source: isPostProd ? (brief.format_source||'—') : 'N/A',
         projet_ratio: brief.ratio||'—',
         projet_qualite: brief.qualite||'—',
         projet_diffusion: brief.diffusion||'—',
@@ -631,6 +628,9 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
         projet_extra: brief.extra||'—',
         estim_tournage: estim.tournage,
         estim_postprod: estim.postprod,
+        estim_deplacement: estim.deplacement,
+        estim_repas: estim.repas,
+        estim_hebergement: estim.hebergement,
         estim_total: estim.total,
         estim_complexite: estim.complexite,
         estim_recommandation: estim.reco,
@@ -638,13 +638,8 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
         verdict_tag: verdictTag,
         verdict_analyse: estim.analyse
       });
-      notify('Email envoye a Sofiane !');
-    } catch(e) {
-      notify('Erreur envoi : ' + (e.text||e.message));
-    }
-    btn.textContent = 'Envoyer a Sofiane';
-    btn.disabled = false;
-  };
+    } catch(e) { console.error('Email Sofiane:', e); }
+  }
 
   function notify(msg) {
     var n = document.getElementById('notif');
