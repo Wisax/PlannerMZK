@@ -242,7 +242,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 
 <footer>
   <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;">MZK<em style="color:var(--accent);font-style:normal">.</em>Creation</div>
-  <p>Auto-Entrepreneur · Sofiane · sofiane.crea@gmail.com</p>
+  <p>Auto-Entrepreneur · Sofiane · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="86f5e9e0efe7e8e3a8e5f4e3e7c6e1ebe7efeaa8e5e9eb">[email&#160;protected]</a></p>
   <div class="flinks">
     <a href="https://mzk-creation.fr" target="_blank">Portfolio</a>
   </div>
@@ -260,7 +260,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 </div>
 <div class="notif" id="notif"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 (function(){
 // CURSOR
@@ -289,9 +289,10 @@ function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
 
 var BASE_START=[
   {f:'nom',     q:'Bonjour ! Je suis l\'assistant de MZK Creation.\n\nPour commencer — quel est votre **nom et prenom** ?',t:'txt'},
-  {f:'email',   q:'Merci ! Quelle est votre **adresse e-mail** pour le suivi ?',t:'txt'},
+  {f:'telephone',q:'Merci ! Quel est votre **numero de telephone** ?',t:'txt'},
+  {f:'email',   q:'Et votre **adresse e-mail** pour le suivi du projet ?',t:'txt'},
   {f:'societe', q:'Representez-vous une **societe, marque ou collectif** ? (Sinon : Particulier)',t:'txt'},
-  {f:'projet',  q:'Decrivez votre projet. **Quel contenu souhaitez-vous creer ?**\n(Clip, pub, film corporate, social media, evenement, court-metrage…)',t:'txt'},
+  {f:'projet',  q:'Decrivez votre projet en **3 a 5 lignes** — contexte, objectif, public cible, ton souhaite, contraintes particulieres…',t:'txt'},
   {f:'type_presta',q:'Pour ce projet, vous avez besoin de :',t:'single',
    opts:['Tournage uniquement','Post-production uniquement','Tournage + Post-production']},
 ];
@@ -458,6 +459,7 @@ window.showDevis=function(){
   document.getElementById('mb').innerHTML=
     '<div class="ds"><h4>Client</h4>'+
     '<div class="dr"><span class="l">Nom</span><span class="v">'+(ans.nom||'—')+'</span></div>'+
+    '<div class="dr"><span class="l">Telephone</span><span class="v">'+(ans.telephone||'—')+'</span></div>'+
     '<div class="dr"><span class="l">Email</span><span class="v">'+(ans.email||'—')+'</span></div>'+
     '<div class="dr"><span class="l">Societe</span><span class="v">'+(ans.societe||'Particulier')+'</span></div></div>'+
     '<div class="ds"><h4>Projet</h4>'+
@@ -497,7 +499,7 @@ window.dlPDF=function(){
   var y=50;
   function sec(t){doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(A[0],A[1],A[2]);doc.text(t,20,y);y+=5;doc.setFont('helvetica','normal');doc.setFontSize(8.5);}
   function row(l,v,r,g,b){if(!v)return;doc.setTextColor(MU[0],MU[1],MU[2]);doc.text(l,22,y);doc.setTextColor(r||W[0],g||W[1],b||W[2]);var ln=doc.splitTextToSize(String(v),100);doc.text(ln,80,y);y+=ln.length*5+2;}
-  sec('CLIENT');row('Nom',ans.nom);row('Email',ans.email);row('Societe',ans.societe||'Particulier');y+=3;
+  sec('CLIENT');row('Nom',ans.nom);row('Telephone',ans.telephone);row('Email',ans.email);row('Societe',ans.societe||'Particulier');y+=3;
   sec('PROJET');row('Description',ans.projet);row('Type prestation',ans.type_presta);
   if(ans.details_tournage)row('Details tournage',ans.details_tournage);
   if(ans.format_source)row('Format rushes',ans.format_source);
@@ -545,7 +547,7 @@ function buildEmailSofiane(){
     (ans.sous_prestations||'Post-production').split(', ').filter(Boolean).forEach(function(s){pStr+=s+'\n';});
   var sep='================================================';
   return 'NOUVEAU PROJET CLIENT — MZK CREATION\nRef. '+REF+' — '+new Date().toLocaleDateString('fr-FR')+'\n'+sep+'\n\n'+
-    'CLIENT\nNom           : '+(ans.nom||'—')+'\nEmail         : '+(ans.email||'—')+'\nSociete       : '+(ans.societe||'Particulier')+'\n\n'+
+    'CLIENT\nNom           : '+(ans.nom||'—')+'\nTelephone     : '+(ans.telephone||'—')+'\nEmail         : '+(ans.email||'—')+'\nSociete       : '+(ans.societe||'Particulier')+'\n\n'+
     'PROJET\nDescription   : '+(ans.projet||'—')+'\nPrestation    : '+(ans.type_presta||'—')+'\n'+
     (ans.details_tournage?'Det. tournage : '+ans.details_tournage+'\n':'')+
     (ans.format_source?'Format rushes : '+ans.format_source+'\n':'')+
@@ -572,15 +574,3 @@ window.sendMail=function(){
 
 function notify(msg){
   var n=document.getElementById('notif');
-  n.textContent=msg;n.classList.add('show');
-  setTimeout(function(){n.classList.remove('show');},4000);
-}
-
-// INIT
-flowSteps=BASE_START.slice();
-(async function(){await sleep(400);await ask(0);})();
-
-})();
-</script>
-</body>
-</html>
