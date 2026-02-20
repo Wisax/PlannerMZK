@@ -361,7 +361,14 @@ var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role
     if (parseBrief(reply)) {
       convDone = true;
       var visibleReply = reply.replace(/\[BRIEF_COMPLET\][\s\S]*/, '').trim();
-      if (!visibleReply) visibleReply = 'Merci ! Votre brief est complet. Sofiane reviendra vers vous rapidement.';
+      if (parseBrief(reply)) {
+  convDone = true;
+  var visibleReply = reply.replace(/\[BRIEF_COMPLET\][\s\S]*/s, '').trim();
+  if (!visibleReply) visibleReply = 'Parfait, votre brief est complet. Sofiane revient vers vous rapidement.';
+  addMsg(visibleReply, 'b');
+  await sleep(600);
+  showDevisBtn();
+}
       addMsg(visibleReply, 'b');
       await sleep(600);
       showDevisBtn();
