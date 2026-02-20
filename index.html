@@ -282,42 +282,14 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   var brief = {};
   var convDone = false;
 
-  var SYSTEM_PROMPT = [
-    "Tu es l'assistant commercial de MZK Creation, une entreprise de videaste et post-production dirigee par Sofiane.",
-    "Ton role est de collecter les informations du projet du client de maniere conversationnelle, professionnelle et chaleureuse.",
-    "Tu dois collecter dans l'ordre (une info a la fois, ne pas tout demander d'un coup) :",
-    "1. Nom et prenom du client",
-    "2. Numero de telephone",
-    "3. Email",
-    "4. Societe ou marque (ou Particulier)",
-    "5. Description du projet en 3 a 5 lignes (contexte, objectif, public cible, ton souhaite)",
-    "6. Type de prestation : Tournage uniquement / Post-production uniquement / Tournage + Post-production",
-    "7. Si tournage : type de captation, lieu, nombre de jours",
-    "8. Si post-prod : quelles sous-prestations parmi Montage / Etalonnage / Motion Design / VFX / 3D / Animation / IA Generative / Sous-titres",
-    "9. Si post-prod : format des rushes (S-Log, RAW, REC709...)",
-    "10. Ratio image : 16:9 / 9:16 / 1:1 / autre",
-    "11. Qualite : 1080p / 4K / 6K-8K",
-    "12. Plateformes de diffusion",
-    "13. Duree du contenu final",
-    "14. Deadline",
-    "15. Budget global (propose : moins de 100 EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier)",
-    "16. References visuelles",
-    "17. Informations complementaires",
-    "",
-    "Quand tu as collecte toutes les infos, ecris exactement : [BRIEF_COMPLET] puis un JSON avec toutes les donnees collectees.",
-    "Le JSON doit avoir ces cles : nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra",
-    "Sois concis, pro et adapte ton langage a quelqu'un qui cherche un prestataire video. Reponds toujours en francais.",
-    "Ne pose qu'une seule question a la fois. Sois naturel et encourage le client."
-  ].join('
-');
+  var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation, videaste et post-production dirige par Sofiane. Collecte les infos une par une dans cet ordre : 1.Nom et prenom 2.Telephone 3.Email 4.Societe ou Particulier 5.Description projet en 3 a 5 lignes (contexte, objectif, public, ton) 6.Type prestation: Tournage / Post-production / Les deux 7.Si tournage: type captation, lieu, nb jours 8.Si post-prod: sous-prestations parmi Montage, Etalonnage, Motion Design, VFX, 3D, Animation, IA Generative, Sous-titres 9.Si post-prod: format rushes S-Log, RAW ou REC709 10.Ratio image 16:9 ou 9:16 ou 1:1 11.Qualite 1080p ou 4K ou 6K 12.Plateformes de diffusion 13.Duree contenu 14.Deadline 15.Budget parmi: moins 100EUR, 100-300, 300-500, 500-1500, 1500-3000, 3000-5000, 5000+, A negocier 16.References visuelles 17.Infos complementaires. Quand tout est collecte ecris exactement [BRIEF_COMPLET] puis un JSON sur une ligne avec les cles: nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra. Pose une seule question a la fois. Sois professionnel, chaleureux et reponds toujours en francais.";
 
   function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
   function addMsg(text, who) {
     var d = document.createElement('div');
     d.className = 'msg ' + who;
-    var clean = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/
-/g, '<br>');
+    var clean = text.split('**').map(function(s,i){return i%2===1?'<strong>'+s+'</strong>':s;}).join('').split('\n').join('<br>');
     if (who === 'b') {
       d.innerHTML = '<div class="ico">&#129302;</div><div class="bub">' + clean + '</div>';
     } else {
@@ -543,8 +515,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
       '',
       '================================================',
       'MZK Creation — mzk-creation.fr'
-    ].filter(function(l){ return l !== null && l !== undefined; }).join('
-');
+    ].filter(function(l){ return l !== null && l !== undefined; }).join('\n');
     var sub = encodeURIComponent('[MZK] Nouveau projet — ' + (brief.nom||'Client') + ' — ' + REF);
     var body = encodeURIComponent(lines);
     window.open('mailto:' + MAIL + '?subject=' + sub + '&body=' + body);
