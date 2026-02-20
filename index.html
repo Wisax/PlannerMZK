@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MZK Creation</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23070707'/%3E%3Cpolygon points='2,4 30,4 28,28 4,28' fill='%23ff3c00'/%3E%3Ctext x='16' y='22' font-family='Arial Black,sans-serif' font-size='13' font-weight='900' text-anchor='middle' fill='%23070707'%3EMZK%3C/text%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--black:#070707;--white:#f0ede6;--accent:#ff3c00;--gold:#ffd700;--gray:#111;--gray2:#1c1c1c;--muted:#666;--border:rgba(255,255,255,.07);}
@@ -242,7 +243,8 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     <div class="mb" id="mb"></div>
     <div class="ma">
       <button class="bpdf" id="pdfBtn">Telecharger PDF</button>
-      <button class="bmail" id="mailBtn">Envoyer par email</button>
+      <button class="bmail" id="mailClientBtn">Email au client</button>
+      <button class="bmail" id="mailSofianeBtn" style="background:rgba(255,60,0,.1);border-color:rgba(255,60,0,.4);color:var(--accent);">Envoyer a Sofiane</button>
     </div>
   </div>
 </div>
@@ -512,42 +514,132 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     notify('PDF telecharge !');
   };
 
-  document.getElementById('mailBtn').onclick = function() {
+  // EMAIL CLIENT — recap de ses reponses
+  document.getElementById('mailClientBtn').onclick = function() {
     var lines = [
+      'Bonjour ' + (brief.nom ? brief.nom.split(' ')[0] : '') + ',',
+      '',
+      'Merci pour votre demande. Voici le recap de votre projet tel que nous l\'avons enregistre :',
+      '',
+      '— Projet : ' + (brief.projet||'—'),
+      '— Prestation : ' + (brief.type_presta||'—'),
+      brief.details_tournage ? '— Details tournage : ' + brief.details_tournage : '',
+      brief.lieu ? '— Lieu : ' + brief.lieu : '',
+      brief.nb_jours ? '— Duree tournage : ' + brief.nb_jours : '',
+      brief.sous_prestations ? '— Post-production : ' + brief.sous_prestations : '',
+      brief.format_source ? '— Format rushes : ' + brief.format_source : '',
+      '— Ratio : ' + (brief.ratio||'—'),
+      '— Qualite : ' + (brief.qualite||'—'),
+      '— Diffusion : ' + (brief.diffusion||'—'),
+      '— Duree contenu : ' + (brief.duree||'—'),
+      '— Deadline : ' + (brief.deadline||'—'),
+      brief.refs ? '— References : ' + brief.refs : '',
+      brief.extra ? '— Infos complementaires : ' + brief.extra : '',
+      '',
+      'Sofiane vous recontactera rapidement avec un devis detaille.',
+      '',
+      'MZK Creation — mzk-creation.fr'
+    ].filter(function(l){ return l !== null && l !== undefined && l !== ''; }).join('\n');
+    var sub = encodeURIComponent('[MZK Creation] Recap de votre projet — Ref. ' + REF);
+    var body = encodeURIComponent(lines);
+    window.open('mailto:' + (brief.email||'') + '?subject=' + sub + '&body=' + body);
+    notify('Email client ouvert !');
+  };
+
+  // EMAIL SOFIANE — brief complet + estimation IA
+  document.getElementById('mailSofianeBtn').onclick = async function() {
+    var btn = document.getElementById('mailSofianeBtn');
+    btn.textContent = 'Calcul IA...';
+    btn.disabled = true;
+
+    // Appel IA pour estimation
+    var promptEstim = 'Tu es un expert en tarification video/post-production. Voici un brief client :\n' +
+      'Projet : ' + (brief.projet||'—') + '\n' +
+      'Prestation : ' + (brief.type_presta||'—') + '\n' +
+      (brief.details_tournage ? 'Details tournage : ' + brief.details_tournage + '\n' : '') +
+      (brief.lieu ? 'Lieu : ' + brief.lieu + '\n' : '') +
+      (brief.nb_jours ? 'Nb jours tournage : ' + brief.nb_jours + '\n' : '') +
+      (brief.sous_prestations ? 'Post-prod : ' + brief.sous_prestations + '\n' : '') +
+      'Ratio : ' + (brief.ratio||'—') + '\n' +
+      'Qualite : ' + (brief.qualite||'—') + '\n' +
+      'Duree contenu : ' + (brief.duree||'—') + '\n' +
+      'Deadline : ' + (brief.deadline||'—') + '\n' +
+      'Budget annonce par le client : ' + (brief.budget||'—') + '\n\n' +
+      'Tarifs du prestataire : Tournage = 800 EUR/jour (100 EUR/h). Post-production = 400 EUR/jour (50 EUR/h). Ces tarifs peuvent etre revus a la baisse selon le projet.\n\n' +
+      'Reponds en francais avec ce format exact (rien d\'autre) :\n' +
+      'ESTIMATION_TOURNAGE: X EUR (Y jours)\n' +
+      'ESTIMATION_POSTPROD: X EUR (Y jours)\n' +
+      'TOTAL_ESTIME: X EUR\n' +
+      'BUDGET_CLIENT: ' + (brief.budget||'—') + '\n' +
+      'ANALYSE_BUDGET: [2-3 phrases max : le budget du client est-il realiste ? trop bas ? correct ? Sois direct et honnete pour aider Sofiane a negocier.]\n' +
+      'COMPLEXITE: [Simple / Moyenne / Elevee]\n' +
+      'RECOMMANDATION: [1 phrase sur comment aborder la nego avec ce client]';
+
+    var estimPayload = {
+      model: 'llama-3.3-70b-versatile',
+      messages: [{ role: 'user', content: promptEstim }],
+      temperature: 0.4,
+      max_tokens: 400
+    };
+
+    var estimation = '';
+    try {
+      var res = await fetch(GROQ_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + GROQ_KEY },
+        body: JSON.stringify(estimPayload)
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      estimation = data.choices[0].message.content;
+    } catch(e) {
+      estimation = 'Erreur estimation IA : ' + e.message;
+    }
+
+    var lines = [
+      '==========================================',
       'NOUVEAU PROJET — MZK CREATION',
       'Ref. ' + REF + ' — ' + new Date().toLocaleDateString('fr-FR'),
-      '================================================',
+      '==========================================',
       '',
-      'CLIENT',
+      '[ CLIENT ]',
       'Nom           : ' + (brief.nom||'—'),
       'Telephone     : ' + (brief.telephone||'—'),
       'Email         : ' + (brief.email||'—'),
       'Societe       : ' + (brief.societe||'Particulier'),
       '',
-      'PROJET',
+      '[ PROJET ]',
       'Description   : ' + (brief.projet||'—'),
       'Prestation    : ' + (brief.type_presta||'—'),
       brief.details_tournage ? 'Det. tournage : ' + brief.details_tournage : '',
       brief.lieu ? 'Lieu          : ' + brief.lieu : '',
       brief.nb_jours ? 'Jours         : ' + brief.nb_jours : '',
-      brief.sous_prestations ? 'Sous-presta   : ' + brief.sous_prestations : '',
+      brief.sous_prestations ? 'Post-prod     : ' + brief.sous_prestations : '',
       brief.format_source ? 'Format rushes : ' + brief.format_source : '',
       'Ratio         : ' + (brief.ratio||'—'),
       'Qualite       : ' + (brief.qualite||'—'),
       'Diffusion     : ' + (brief.diffusion||'—'),
       'Duree         : ' + (brief.duree||'—'),
       'Deadline      : ' + (brief.deadline||'—'),
-      'BUDGET CLIENT : ' + (brief.budget||'—') + ' <- pour ta negociation',
+      'BUDGET CLIENT : ' + (brief.budget||'—'),
       brief.refs ? 'References    : ' + brief.refs : '',
       brief.extra ? 'Infos sup.    : ' + brief.extra : '',
       '',
-      '================================================',
+      '==========================================',
+      '[ ESTIMATION IA — CONFIDENTIEL ]',
+      '==========================================',
+      estimation,
+      '',
+      '==========================================',
       'MZK Creation — mzk-creation.fr'
-    ].filter(function(l){ return l !== null && l !== undefined; }).join('\n');
-    var sub = encodeURIComponent('[MZK] Nouveau projet — ' + (brief.nom||'Client') + ' — ' + REF);
+    ].filter(function(l){ return l !== null && l !== undefined && l !== ''; }).join('\n');
+
+    var sub = encodeURIComponent('[MZK INTERNE] Brief + Estimation — ' + (brief.nom||'Client') + ' — ' + REF);
     var body = encodeURIComponent(lines);
     window.open('mailto:' + MAIL + '?subject=' + sub + '&body=' + body);
-    notify('Email ouvert !');
+    btn.textContent = 'Envoyer a Sofiane';
+    btn.disabled = false;
+    notify('Email Sofiane ouvert !');
   };
 
   function notify(msg) {
