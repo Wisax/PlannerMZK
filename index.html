@@ -237,7 +237,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 
 <footer>
   <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;">MZK<em style="color:var(--accent);font-style:normal">.</em>Creation</div>
-  <p>Auto-Entrepreneur . Sofiane . <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d3a0bcb5bab2bdb6fdb0a1b6b293b4beb2babffdb0bcbe">[email&#160;protected]</a></p>
+  <p>Auto-Entrepreneur . Sofiane . <span id="footer-email"></span></p>
   <div class="flinks"><a href="https://mzk-creation.fr" target="_blank">Portfolio</a></div>
 </footer>
 
@@ -321,7 +321,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   async function callGroq(userMsg) {
     history.push({ role: 'user', content: userMsg });
     var payload = {
-      model: 'llama-3.3-70b-versatile',
+      model: 'llama-3.1-8b-instant',
       temperature: 0.7,
       max_tokens: 500,
       messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(history)
@@ -676,6 +676,11 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     n.textContent = msg; n.classList.add('show');
     setTimeout(function(){ n.classList.remove('show'); }, 4000);
   }
+
+  // Email footer — rendu en JS pour contourner le masquage Cloudflare
+  var em = document.getElementById('footer-email');
+  var e = 'sofiane.crea' + '@' + 'gmail.com';
+  em.innerHTML = '<a href="mailto:' + e + '" style="color:var(--muted);text-decoration:none;">' + e + '</a>';
 
 })();
 </script>
