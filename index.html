@@ -36,7 +36,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,11vw,10rem);line-h
 .bghost{color:var(--white);font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;display:flex;align-items:center;gap:.5rem;transition:color .2s;}
 .bghost:hover{color:var(--accent);}
 .bghost::after{content:' ->';}
-.hfoot{position:relative;z-index:10;padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.hfoot{position:relative;z-index:10;padding:1.4rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem;}
 .ticker{display:flex;gap:2rem;font-family:'Space Mono',monospace;font-size:.67rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
 .ticker .on{color:var(--accent);}
 .avail{display:flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.67rem;color:var(--muted);}
@@ -55,7 +55,7 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,11vw,10rem);line-h
 .bc-title{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.04em;margin-bottom:.6rem;}
 .bc-sub{font-size:.82rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;line-height:1.7;}
 .bc-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
-.bc-tag{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--muted);border:1px solid rgba(255,255,255,.1);padding:.3rem .7rem;letter-spacing:.05em;transition:all .3s;}
+.bc-tag{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--muted);border:1px solid rgba(255,255,255,.1);padding:.3rem .7rem;transition:all .3s;}
 .bigcard:hover .bc-tag{border-color:rgba(255,60,0,.3);color:var(--white);}
 .csec{padding:6rem 3rem;border-top:1px solid var(--border);position:relative;z-index:2;}
 .clay{display:grid;grid-template-columns:1fr 1.45fr;gap:5rem;align-items:start;}
@@ -88,16 +88,11 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,11vw,10rem);line-h
 .typing span:nth-child(2){animation-delay:.2s;}
 .typing span:nth-child(3){animation-delay:.4s;}
 @keyframes ty{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
-.qr{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.25rem;}
-.qbtn{background:transparent;border:1px solid rgba(255,60,0,.4);color:var(--accent);padding:.35rem .85rem;font-family:'Space Mono',monospace;font-size:.66rem;cursor:pointer;transition:all .2s;clip-path:polygon(4px 0,100% 0,calc(100% - 4px) 100%,0 100%);}
-.qbtn:hover,.qbtn.sel{background:var(--accent);color:var(--black);}
-.qbtn.ok{border-color:#00e87a;color:#00e87a;}
-.qbtn.ok:hover{background:#00e87a;color:var(--black);}
 .win{padding:.9rem 1.2rem;border-top:1px solid var(--border);display:flex;gap:.7rem;align-items:center;}
 .inp{flex:1;background:var(--gray2);border:1px solid var(--border);color:var(--white);padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.83rem;outline:none;transition:border-color .2s;}
 .inp::placeholder{color:var(--muted);}
 .inp:focus{border-color:var(--accent);}
-.snd{background:var(--accent);border:none;color:var(--black);width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:background .2s;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);flex-shrink:0;}
+.snd{background:var(--accent);border:none;color:var(--black);width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;transition:background .2s;clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);flex-shrink:0;}
 .snd:hover{background:var(--gold);}
 .snd:disabled{background:var(--gray2);cursor:not-allowed;}
 footer{padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2;flex-wrap:wrap;gap:1rem;}
@@ -121,22 +116,31 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 .dr .v{color:var(--white);font-family:'Space Mono',monospace;font-size:.75rem;text-align:right;max-width:60%;}
 .dr .p{color:var(--accent);font-family:'Space Mono',monospace;font-size:.75rem;font-style:italic;}
 .dtot{background:rgba(255,60,0,.07);border:1px solid rgba(255,60,0,.2);padding:1rem 1.4rem;display:flex;justify-content:space-between;align-items:center;margin-top:1rem;}
-.dtot .tl{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.05em;}
+.dtot .tl{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;}
 .dtot .tv{font-family:'Space Mono',monospace;color:var(--accent);font-size:.85rem;font-style:italic;}
 .dn{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);line-height:1.65;margin-top:1rem;padding:.75rem;border-left:2px solid rgba(255,60,0,.25);}
 .ma{display:flex;gap:1rem;padding:0 2rem 1.8rem;flex-wrap:wrap;}
-.bpdf{background:var(--accent);color:var(--black);border:none;padding:.85rem 1.8rem;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.08em;cursor:pointer;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);transition:all .2s;}
+.bpdf,.bmail{padding:.85rem 1.8rem;font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:all .2s;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);border:none;}
+.bpdf{background:var(--accent);color:var(--black);}
 .bpdf:hover{background:var(--gold);}
-.bmail{background:transparent;color:var(--white);border:1px solid var(--border);padding:.85rem 1.8rem;font-family:'Space Mono',monospace;font-size:.72rem;letter-spacing:.08em;cursor:pointer;transition:all .2s;}
+.bmail{background:transparent;color:var(--white);border:1px solid var(--border);clip-path:none;}
 .bmail:hover{border-color:var(--accent);color:var(--accent);}
 .notif{position:fixed;bottom:2rem;right:2rem;background:var(--gray2);border:1px solid var(--accent);color:var(--white);padding:1rem 1.5rem;font-family:'Space Mono',monospace;font-size:.72rem;z-index:2000;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transform:translateX(200%);transition:transform .4s ease;max-width:320px;line-height:1.5;}
 .notif.show{transform:translateX(0);}
-@media(max-width:900px){nav,.hbody,.hfoot,.sec,.csec{padding-left:1.5rem;padding-right:1.5rem;}.g2{grid-template-columns:1fr;}.clay{grid-template-columns:1fr;gap:3rem;}footer{padding:1.5rem;flex-direction:column;text-align:center;}.widget{height:580px;}.nlinks .h{display:none;}}
+@media(max-width:900px){
+  nav,.hbody,.hfoot,.sec,.csec{padding-left:1.5rem;padding-right:1.5rem;}
+  .g2,.clay{grid-template-columns:1fr;}
+  .clay{gap:3rem;}
+  footer{padding:1.5rem;flex-direction:column;text-align:center;}
+  .widget{height:560px;}
+  .nlinks .h{display:none;}
+}
 </style>
 </head>
 <body>
 <div id="cur"></div>
 <div id="cur2"></div>
+
 <section class="hero">
   <div class="hbg"></div><div class="gridl"></div>
   <nav>
@@ -150,7 +154,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   <div class="hbody">
     <div class="tag">Videaste . Post-Production . IA</div>
     <h1>RAW<br><span class="ghost">TO</span><span class="fire">RENDERED</span></h1>
-    <p class="hsub">Du tournage brut a la livraison finale — motion design, VFX, 3D, animation, IA generative. Chaque projet traite avec une exigence technique et creative sans compromis.</p>
+    <p class="hsub">Du tournage brut a la livraison finale. Motion design, VFX, 3D, animation, IA generative. Chaque projet traite avec une exigence technique et creative sans compromis.</p>
     <div class="acts">
       <a href="#contact" class="bmain">Deposer mon projet</a>
       <a href="https://mzk-creation.fr" target="_blank" class="bghost">Voir le portfolio</a>
@@ -163,6 +167,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     <div class="avail"><span class="dot"></span>Disponible pour nouveaux projets</div>
   </div>
 </section>
+
 <section class="sec" id="services">
   <div class="slbl">/ Prestations</div>
   <div class="g2">
@@ -170,7 +175,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
       <div class="bc-n">01</div>
       <div class="bc-ico">&#127916;</div>
       <div class="bc-title">Tournage</div>
-      <p class="bc-sub">Captation professionnelle sur le terrain, en studio ou en deplacement partout en France. Equipement video complet, eclairage et son.</p>
+      <p class="bc-sub">Captation professionnelle sur le terrain, en studio ou en deplacement. Equipement video complet, eclairage et son.</p>
       <div class="bc-tags">
         <span class="bc-tag">Equipement video pro</span>
         <span class="bc-tag">Eclairage</span>
@@ -184,7 +189,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
       <div class="bc-n">02</div>
       <div class="bc-ico">&#128421;</div>
       <div class="bc-title">Post-Production</div>
-      <p class="bc-sub">De la timeline au rendu final. Montage, etalonnage, effets visuels et intelligence artificielle sur station M2 haute performance.</p>
+      <p class="bc-sub">De la timeline au rendu final. Montage, etalonnage, effets visuels et intelligence artificielle sur station M2.</p>
       <div class="bc-tags">
         <span class="bc-tag">Montage</span>
         <span class="bc-tag">Etalonnage</span>
@@ -198,331 +203,360 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     </div>
   </div>
 </section>
+
 <section class="csec" id="contact">
   <div class="clay">
     <div class="cintro">
       <div class="slbl">/ Votre projet</div>
       <h2>PARLEZ-MOI DE<br>VOTRE <em>PROJET</em></h2>
-      <p>Mon assistant collecte tous les details de votre projet. Le questionnaire s'adapte selon vos besoins. Sofiane recoit un brief complet et revient rapidement.</p>
+      <p>Discutez directement avec mon assistant IA. Il comprend votre besoin, pose les bonnes questions et genere un brief complet pour Sofiane.</p>
       <div class="steps">
-        <div class="step"><div class="sn">1</div><div class="st"><strong>Tournage, post-prod ou les deux ?</strong>Le flow s'adapte a votre besoin exact</div></div>
-        <div class="step"><div class="sn">2</div><div class="st"><strong>On detaille ensemble</strong>Format, ratio, qualite, etalonnage, sous-titres</div></div>
-        <div class="step"><div class="sn">3</div><div class="st"><strong>Devis preliminaire genere</strong>PDF telechargeable et email envoye a Sofiane</div></div>
+        <div class="step"><div class="sn">1</div><div class="st"><strong>Decrivez votre projet</strong>L'IA pose les questions adaptees</div></div>
+        <div class="step"><div class="sn">2</div><div class="st"><strong>Brief genere automatiquement</strong>Tournage, post-prod, format, budget</div></div>
+        <div class="step"><div class="sn">3</div><div class="st"><strong>PDF + email envoye a Sofiane</strong>Il revient rapidement avec un devis</div></div>
       </div>
     </div>
     <div class="widget">
       <div class="wh">
         <div class="av">MZK</div>
-        <div class="wi"><h4>Assistant MZK Creation</h4><p>&#9679; En ligne</p></div>
+        <div class="wi"><h4>Assistant MZK Creation</h4><p>&#9679; Powered by Gemini AI</p></div>
       </div>
       <div class="msgs" id="msgs"></div>
       <div class="win">
-        <input type="text" class="inp" id="inp" placeholder="Votre reponse..." />
+        <input type="text" class="inp" id="inp" placeholder="Votre message..." />
         <button class="snd" id="snd">&#8593;</button>
       </div>
     </div>
   </div>
 </section>
+
 <footer>
   <div style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;">MZK<em style="color:var(--accent);font-style:normal">.</em>Creation</div>
-  <p>Auto-Entrepreneur . Sofiane . sofiane.crea(at)gmail.com</p>
+  <p>Auto-Entrepreneur . Sofiane . sofiane.crea@gmail.com</p>
   <div class="flinks"><a href="https://mzk-creation.fr" target="_blank">Portfolio</a></div>
 </footer>
+
 <div class="ov" id="ov">
   <div class="modal">
-    <div class="mh"><h3>DEVIS <em>PRELIMINAIRE</em></h3><button class="mc" onclick="closeM()">X</button></div>
+    <div class="mh"><h3>DEVIS <em>PRELIMINAIRE</em></h3><button class="mc" id="closeBtn">X</button></div>
     <div class="mb" id="mb"></div>
     <div class="ma">
-      <button class="bpdf" onclick="dlPDF()">Telecharger PDF</button>
-      <button class="bmail" onclick="sendMail()">Envoyer par email</button>
+      <button class="bpdf" id="pdfBtn">Telecharger PDF</button>
+      <button class="bmail" id="mailBtn">Envoyer par email</button>
     </div>
   </div>
 </div>
 <div class="notif" id="notif"></div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 (function(){
-var cu=document.getElementById('cur'),cu2=document.getElementById('cur2');
-document.addEventListener('mousemove',function(e){
-  cu.style.transform='translate('+(e.clientX-5)+'px,'+(e.clientY-5)+'px)';
-  setTimeout(function(){cu2.style.transform='translate('+(e.clientX-17)+'px,'+(e.clientY-17)+'px)';},80);
-});
-var tks=document.querySelectorAll('.ticker span'),ti=0;
-setInterval(function(){tks.forEach(function(t){t.classList.remove('on');});ti=(ti+1)%tks.length;tks[ti].classList.add('on');},1800);
-var MAIL='sofiane.crea@gmail.com';
-var REF='MZK-'+Date.now().toString().slice(-6);
-var ans={},active=true,msel=[],mmode=false,flowSteps=[],flowIdx=0;
-var msgsEl=document.getElementById('msgs');
-var inpEl=document.getElementById('inp');
-var sndEl=document.getElementById('snd');
-function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
-var BASE_START=[
-  {f:'nom',q:'Bonjour ! Je suis l assistant de MZK Creation. Pour commencer, quel est votre **nom et prenom** ?',t:'txt'},
-  {f:'telephone',q:'Merci ! Quel est votre **numero de telephone** ?',t:'txt'},
-  {f:'email',q:'Et votre **adresse e-mail** pour le suivi du projet ?',t:'txt'},
-  {f:'societe',q:'Representez-vous une **societe, marque ou collectif** ? Sinon repondez Particulier.',t:'txt'},
-  {f:'projet',q:'Decrivez votre projet en **3 a 5 lignes** : contexte, objectif, public cible, ton souhaite, contraintes particulieres...',t:'txt'},
-  {f:'type_presta',q:'Pour ce projet, vous avez besoin de :',t:'single',opts:['Tournage uniquement','Post-production uniquement','Tournage + Post-production']},
-];
-var STEPS_T=[
-  {f:'details_tournage',q:'Pour le **tournage**, quel type de captation ? Interviews, clips dynamiques, evenement live, fond vert...',t:'txt'},
-  {f:'lieu',q:'Dans quelle **ville ou region** se deroule le tournage ?',t:'txt'},
-  {f:'nb_jours',q:'Combien de **jours de tournage** estimez-vous ?',t:'single',opts:['Demi-journee','1 jour','2 jours','3 jours +','Non defini']},
-];
-var STEPS_P=[
-  {f:'sous_prestations',q:'Quelles **prestations de post-production** souhaitez-vous ? Selection multiple possible.',t:'multi',opts:['Montage','Etalonnage','Motion Design','VFX','3D','Animation','IA Generative','Sous-titres','Tout inclus']},
-  {f:'sources',q:'Avez-vous des **fichiers sources** existants ? Rushes deja tournes, assets graphiques, voix off...',t:'txt'},
-  {f:'format_source',q:'Les rushes sont dans quel **format d acquisition** ?',t:'single',opts:['S-Log / Log (Sony, ARRI...)','RAW (CinemaDNG, BRAW...)','REC 709 standard','Non defini / Pas de rushes']},
-];
-var BASE_END=[
-  {f:'ratio',q:'Quel **ratio d image** pour la livraison finale ?',t:'multi',opts:['16:9 (YouTube, TV)','9:16 (Reels, TikTok, Stories)','1:1 (Carre)','4:3','Autre']},
-  {f:'qualite',q:'Quelle **qualite de livraison** souhaitez-vous ?',t:'single',opts:['1080p Full HD','4K UHD','6K / 8K','A definir selon usage']},
-  {f:'diffusion',q:'Sur quelles **plateformes** sera diffuse le contenu ? YouTube, Instagram, TikTok, TV, Cinema, Corporate...',t:'txt'},
-  {f:'duree',q:'Quelle **duree approximative** pour le contenu final ?',t:'single',opts:['Moins de 1 min','1 a 3 min','3 a 5 min','5 a 10 min','10 min +','Non defini']},
-  {f:'deadline',q:'Avez-vous une **date limite de livraison** ?',t:'txt'},
-  {f:'budget',q:'Quel **budget global** envisagez-vous pour ce projet ?',t:'single',opts:['Moins de 100 EUR','100 a 300 EUR','300 a 500 EUR','500 a 1500 EUR','1500 a 3000 EUR','3000 a 5000 EUR','5000 EUR +','A negocier']},
-  {f:'refs',q:'Des **references visuelles** ou styles inspirants ? Liens, realisateurs, ambiance souhaitee...',t:'txt'},
-  {f:'extra',q:'Des **informations complementaires** ? Comediens, voix off, musique, contraintes techniques...',t:'txt'},
-];
-function buildFlow(v){
-  var s=BASE_START.slice(),lv=v.toLowerCase();
-  if(lv.indexOf('tournage')>-1&&lv.indexOf('post')===-1) s=s.concat(STEPS_T);
-  else if(lv.indexOf('post')>-1&&lv.indexOf('tournage')===-1) s=s.concat(STEPS_P);
-  else s=s.concat(STEPS_T).concat(STEPS_P);
-  return s.concat(BASE_END);
-}
-function bold(t){return t.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/
-/g,'<br>');}
-function addMsg(text,who){
-  var d=document.createElement('div');d.className='msg '+who;
-  if(who==='b')d.innerHTML='<div class="ico">&#129302;</div><div class="bub">'+bold(text)+'</div>';
-  else d.innerHTML='<div class="bub">'+text+'</div><div class="ico">&#128100;</div>';
-  msgsEl.appendChild(d);msgsEl.scrollTop=msgsEl.scrollHeight;
-}
-function showTy(){
-  var d=document.createElement('div');d.className='msg b';d.id='ty';
-  d.innerHTML='<div class="ico">&#129302;</div><div class="bub"><div class="typing"><span></span><span></span><span></span></div></div>';
-  msgsEl.appendChild(d);msgsEl.scrollTop=msgsEl.scrollHeight;
-}
-function rmTy(){var t=document.getElementById('ty');if(t)t.remove();}
-function rmQR(){var q=document.getElementById('qw');if(q)q.remove();mmode=false;}
-function showQR(opts,multi){
-  var wrap=document.createElement('div');wrap.className='msg b';wrap.id='qw';
-  var inner=document.createElement('div');inner.className='bub';
-  inner.style.cssText='background:transparent;border:none;padding:0';
-  var qr=document.createElement('div');qr.className='qr';
-  opts.forEach(function(o){
-    var btn=document.createElement('button');btn.className='qbtn';btn.textContent=o;
-    btn.onclick=function(){
-      if(!multi){handle(o,true);}
-      else{
-        var idx=msel.indexOf(o);
-        if(idx>-1){msel.splice(idx,1);btn.classList.remove('sel');}
-        else{msel.push(o);btn.classList.add('sel');}
-      }
-    };
-    qr.appendChild(btn);
+  // CURSOR
+  var cu = document.getElementById('cur');
+  var cu2 = document.getElementById('cur2');
+  document.addEventListener('mousemove', function(e) {
+    cu.style.transform = 'translate(' + (e.clientX - 5) + 'px,' + (e.clientY - 5) + 'px)';
+    setTimeout(function() {
+      cu2.style.transform = 'translate(' + (e.clientX - 17) + 'px,' + (e.clientY - 17) + 'px)';
+    }, 80);
   });
-  if(multi){
-    var ok=document.createElement('button');ok.className='qbtn ok';ok.textContent='Confirmer';
-    ok.onclick=function(){if(msel.length>0){handle(msel.join(', '),true);msel=[];}};
-    qr.appendChild(ok);mmode=true;
+
+  // TICKER
+  var tks = document.querySelectorAll('.ticker span'), ti = 0;
+  setInterval(function() {
+    tks.forEach(function(t) { t.classList.remove('on'); });
+    ti = (ti + 1) % tks.length;
+    tks[ti].classList.add('on');
+  }, 1800);
+
+  // CONFIG
+  var GEMINI_KEY = 'AIzaSyAwIxlxPR7-mdRwyrgrJD217foxX1GnAYI';
+  var GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY;
+  var MAIL = 'sofiane.crea@gmail.com';
+  var REF = 'MZK-' + Date.now().toString().slice(-6);
+
+  var msgsEl = document.getElementById('msgs');
+  var inpEl = document.getElementById('inp');
+  var sndEl = document.getElementById('snd');
+  var history = [];
+  var brief = {};
+  var convDone = false;
+
+  var SYSTEM_PROMPT = [
+    "Tu es l'assistant commercial de MZK Creation, une entreprise de videaste et post-production dirigee par Sofiane.",
+    "Ton role est de collecter les informations du projet du client de maniere conversationnelle, professionnelle et chaleureuse.",
+    "Tu dois collecter dans l'ordre (une info a la fois, ne pas tout demander d'un coup) :",
+    "1. Nom et prenom du client",
+    "2. Numero de telephone",
+    "3. Email",
+    "4. Societe ou marque (ou Particulier)",
+    "5. Description du projet en 3 a 5 lignes (contexte, objectif, public cible, ton souhaite)",
+    "6. Type de prestation : Tournage uniquement / Post-production uniquement / Tournage + Post-production",
+    "7. Si tournage : type de captation, lieu, nombre de jours",
+    "8. Si post-prod : quelles sous-prestations parmi Montage / Etalonnage / Motion Design / VFX / 3D / Animation / IA Generative / Sous-titres",
+    "9. Si post-prod : format des rushes (S-Log, RAW, REC709...)",
+    "10. Ratio image : 16:9 / 9:16 / 1:1 / autre",
+    "11. Qualite : 1080p / 4K / 6K-8K",
+    "12. Plateformes de diffusion",
+    "13. Duree du contenu final",
+    "14. Deadline",
+    "15. Budget global (propose : moins de 100 EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier)",
+    "16. References visuelles",
+    "17. Informations complementaires",
+    "",
+    "Quand tu as collecte toutes les infos, ecris exactement : [BRIEF_COMPLET] puis un JSON avec toutes les donnees collectees.",
+    "Le JSON doit avoir ces cles : nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra",
+    "Sois concis, pro et adapte ton langage a quelqu'un qui cherche un prestataire video. Reponds toujours en francais.",
+    "Ne pose qu'une seule question a la fois. Sois naturel et encourage le client."
+  ].join('
+');
+
+  function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
+
+  function addMsg(text, who) {
+    var d = document.createElement('div');
+    d.className = 'msg ' + who;
+    var clean = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/
+/g, '<br>');
+    if (who === 'b') {
+      d.innerHTML = '<div class="ico">&#129302;</div><div class="bub">' + clean + '</div>';
+    } else {
+      d.innerHTML = '<div class="bub">' + clean + '</div><div class="ico">&#128100;</div>';
+    }
+    msgsEl.appendChild(d);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
   }
-  inner.appendChild(qr);wrap.appendChild(inner);msgsEl.appendChild(wrap);
-  msgsEl.scrollTop=msgsEl.scrollHeight;
-}
-async function ask(idx){
-  if(idx>=flowSteps.length){await finish();return;}
-  var q=flowSteps[idx];
-  showTy();await sleep(650+Math.random()*350);rmTy();
-  addMsg(q.q,'b');
-  if(q.t==='multi'||q.t==='single'){await sleep(120);showQR(q.opts,q.t==='multi');inpEl.placeholder='Ou tapez votre reponse...';}
-  else{inpEl.placeholder='Votre reponse...';inpEl.focus();}
-}
-async function handle(val,fromBtn){
-  if(!active||!val.trim())return;
-  rmQR();addMsg(val,'u');inpEl.value='';
-  var step=flowSteps[flowIdx];
-  ans[step.f]=val;
-  if(step.f==='type_presta')flowSteps=buildFlow(val);
-  flowIdx++;sndEl.disabled=true;
-  await ask(flowIdx);
-  sndEl.disabled=false;
-}
-sndEl.onclick=function(){handle(inpEl.value,false);};
-inpEl.addEventListener('keydown',function(e){if(e.key==='Enter'&&!mmode)handle(inpEl.value,false);});
-var MC={
-  fx30:{name:'Sony FX30 full cage',note:'Camera principale'},
-  sigma:{name:'Sigma 28-70mm',note:'Optique polyvalente'},
-  trepied:{name:'Trepied professionnel',note:'Stabilisation'},
-  insta:{name:'Insta360 X4 + perche',note:'Captation 360'},
-  djmic:{name:'DJI Mic 2',note:'Son sans fil'},
-  led3:{name:'3 panneaux LED reglables',note:'Eclairage bichrome'},
-  fvert:{name:'Fond vert + Minette',note:'Chroma key'},
-  macm2:{name:'MacBook Pro M2',note:'Station post-prod'},
-  adobe:{name:'Suite Adobe complete',note:'Premiere, AE, Photoshop'},
-  dep:{name:'Deplacement',note:'Frais kilometriques a prevoir'},
-};
-function getMatos(){
-  var tp=(ans.type_presta||'').toLowerCase();
-  var sp=(ans.sous_prestations||'').toLowerCase();
-  var pr=(ans.projet||'').toLowerCase()+' '+(ans.details_tournage||'').toLowerCase();
-  var lieu=(ans.lieu||'').toLowerCase();
-  var used=[];
-  function add(k){if(!used.find(function(x){return x.key===k;}))used.push(Object.assign({key:k},MC[k]));}
-  if(tp.indexOf('tournage')>-1||tp.indexOf('deux')>-1){
-    add('fx30');add('sigma');add('trepied');add('djmic');add('led3');
-    if(/fond vert|chroma|studio/.test(pr))add('fvert');
-    if(/360|immersif|insta/.test(pr))add('insta');
-    if(lieu&&!/paris|idf|ile-de-france|boulogne|vincennes|montreuil|neuilly|levallois|issy/.test(lieu))add('dep');
+
+  function showTyping() {
+    var d = document.createElement('div');
+    d.className = 'msg b'; d.id = 'typing-indicator';
+    d.innerHTML = '<div class="ico">&#129302;</div><div class="bub"><div class="typing"><span></span><span></span><span></span></div></div>';
+    msgsEl.appendChild(d);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
   }
-  if(tp.indexOf('post')>-1||tp.indexOf('deux')>-1){
-    add('macm2');add('adobe');
-    if(/vfx|tout/.test(sp)||/fond vert|chroma/.test(pr))add('fvert');
+
+  function hideTyping() {
+    var t = document.getElementById('typing-indicator');
+    if (t) t.remove();
   }
-  return used;
-}
-async function finish(){
-  active=false;inpEl.disabled=true;sndEl.disabled=true;inpEl.placeholder='Conversation terminee';
-  showTy();await sleep(1300);rmTy();
-  var prenom=(ans.nom||'').split(' ')[0]||'client';
-  addMsg('Merci **'+prenom+'** ! Votre brief a bien ete transmis a Sofiane. Il reviendra vers vous rapidement avec les tarifs finalises.','b');
-  await sleep(500);
-  var d=document.createElement('div');d.className='msg b';
-  d.innerHTML='<div class="ico">&#129302;</div><div class="bub" style="background:transparent;border:none;padding:0"><button class="bmain" onclick="window.showDevis()" style="font-size:.72rem;padding:.8rem 1.4rem;border:none;cursor:pointer;">Voir mon devis preliminaire</button></div>';
-  msgsEl.appendChild(d);msgsEl.scrollTop=msgsEl.scrollHeight;
-}
-window.showDevis=function(){
-  var tp=(ans.type_presta||'').toLowerCase();
-  var sp=ans.sous_prestations||'';
-  var pLines='';
-  if(tp.indexOf('tournage')>-1){
-    pLines+='<div class="dr"><span class="l">Tournage</span><span class="p">A tarifer</span></div>';
-    if(ans.nb_jours)pLines+='<div class="dr"><span class="l">Duree</span><span class="v">'+ans.nb_jours+'</span></div>';
-    if(ans.lieu)pLines+='<div class="dr"><span class="l">Lieu</span><span class="v">'+ans.lieu+'</span></div>';
+
+  async function callGemini(userMsg) {
+    history.push({ role: 'user', parts: [{ text: userMsg }] });
+    var payload = {
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: history
+    };
+    try {
+      var res = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      var data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      var reply = data.candidates[0].content.parts[0].text;
+      history.push({ role: 'model', parts: [{ text: reply }] });
+      return reply;
+    } catch(e) {
+      return 'Desolee, une erreur est survenue. Veuillez reessayer. (' + e.message + ')';
+    }
   }
-  if(tp.indexOf('post')>-1||tp.indexOf('deux')>-1){
-    (sp||'Post-production').split(', ').filter(Boolean).forEach(function(s){pLines+='<div class="dr"><span class="l">'+s+'</span><span class="p">A tarifer</span></div>';});
-    if(ans.format_source)pLines+='<div class="dr"><span class="l">Format rushes</span><span class="v">'+ans.format_source+'</span></div>';
+
+  function parseBrief(text) {
+    var match = text.match(/\[BRIEF_COMPLET\][\s\S]*?(\{[\s\S]*\})/);
+    if (match) {
+      try {
+        brief = JSON.parse(match[1]);
+        return true;
+      } catch(e) {}
+    }
+    return false;
   }
-  var date=new Date().toLocaleDateString('fr-FR');
-  document.getElementById('mb').innerHTML=
-    '<div class="ds"><h4>Client</h4>'+
-    '<div class="dr"><span class="l">Nom</span><span class="v">'+(ans.nom||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Telephone</span><span class="v">'+(ans.telephone||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Email</span><span class="v">'+(ans.email||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Societe</span><span class="v">'+(ans.societe||'Particulier')+'</span></div></div>'+
-    '<div class="ds"><h4>Projet</h4>'+
-    '<div class="dr" style="flex-direction:column;align-items:flex-start;gap:.3rem;border:none"><span class="l">Description</span><span class="v" style="font-family:sans-serif;max-width:100%;text-align:left;margin-top:.2rem;line-height:1.5">'+(ans.projet||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Prestation</span><span class="v">'+(ans.type_presta||'—')+'</span></div>'+
-    (ans.details_tournage?'<div class="dr"><span class="l">Details tournage</span><span class="v">'+ans.details_tournage+'</span></div>':'')+
-    (ans.sources?'<div class="dr"><span class="l">Fichiers sources</span><span class="v">'+ans.sources+'</span></div>':'')+
-    '<div class="dr"><span class="l">Ratio</span><span class="v">'+(ans.ratio||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Qualite</span><span class="v">'+(ans.qualite||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Diffusion</span><span class="v">'+(ans.diffusion||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Duree</span><span class="v">'+(ans.duree||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Deadline</span><span class="v">'+(ans.deadline||'—')+'</span></div>'+
-    '<div class="dr"><span class="l">Budget</span><span class="v" style="color:var(--gold)">'+(ans.budget||'—')+'</span></div>'+
-    (ans.refs?'<div class="dr"><span class="l">References</span><span class="v">'+ans.refs+'</span></div>':'')+
-    (ans.extra?'<div class="dr"><span class="l">Infos sup.</span><span class="v">'+ans.extra+'</span></div>':'')+
-    '</div><div class="ds"><h4>Prestations demandees</h4>'+pLines+'</div>'+
-    '<div class="dtot"><span class="tl">TOTAL ESTIME HT</span><span class="tv">A definir par Sofiane</span></div>'+
-    '<div class="dn">Devis preliminaire non contractuel. Ref. '+REF+' — '+date+'</div>';
-  document.getElementById('ov').classList.add('on');
-};
-window.closeM=function(){document.getElementById('ov').classList.remove('on');};
-window.dlPDF=function(){
-  var jsPDF=window.jspdf.jsPDF;
-  var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
-  var BG=[7,7,7],W=[240,237,230],A=[255,60,0],MU=[100,100,100],G=[255,215,0];
-  doc.setFillColor(BG[0],BG[1],BG[2]);doc.rect(0,0,210,297,'F');
-  doc.setFillColor(A[0],A[1],A[2]);doc.rect(0,0,210,2,'F');
-  doc.setFont('helvetica','bold');doc.setFontSize(22);doc.setTextColor(W[0],W[1],W[2]);doc.text('MZK CREATION',20,20);
-  doc.setFontSize(7.5);doc.setFont('helvetica','normal');doc.setTextColor(MU[0],MU[1],MU[2]);
-  doc.text('DEVIS PRELIMINAIRE NON CONTRACTUEL',20,28);
-  doc.text('Ref. '+REF+' — '+new Date().toLocaleDateString('fr-FR'),20,34);
-  doc.setFillColor(A[0],A[1],A[2]);doc.rect(0,40,210,.5,'F');
-  var y=50;
-  function sec(t){doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(A[0],A[1],A[2]);doc.text(t,20,y);y+=5;doc.setFont('helvetica','normal');doc.setFontSize(8.5);}
-  function row(l,v,rc,gc,bc){if(!v)return;doc.setTextColor(MU[0],MU[1],MU[2]);doc.text(l,22,y);doc.setTextColor(rc||W[0],gc||W[1],bc||W[2]);var ln=doc.splitTextToSize(String(v),100);doc.text(ln,80,y);y+=ln.length*5+2;}
-  sec('CLIENT');
-  row('Nom',ans.nom);row('Telephone',ans.telephone);row('Email',ans.email);row('Societe',ans.societe||'Particulier');y+=3;
-  sec('PROJET');
-  row('Description',ans.projet);row('Prestation',ans.type_presta);
-  if(ans.details_tournage)row('Details tournage',ans.details_tournage);
-  if(ans.format_source)row('Format rushes',ans.format_source);
-  if(ans.sources)row('Fichiers sources',ans.sources);
-  row('Ratio',ans.ratio);row('Qualite',ans.qualite);row('Diffusion',ans.diffusion);
-  row('Duree',ans.duree);row('Deadline',ans.deadline);
-  row('Budget client',ans.budget,G[0],G[1],G[2]);
-  if(ans.refs)row('References',ans.refs);
-  if(ans.extra)row('Infos sup.',ans.extra);
-  y+=3;
-  sec('PRESTATIONS DEMANDEES');
-  var tp2=(ans.type_presta||'').toLowerCase();
-  if(tp2.indexOf('tournage')>-1){
-    doc.setFillColor(20,20,20);doc.rect(20,y-3.5,170,6,'F');
-    doc.setTextColor(W[0],W[1],W[2]);doc.text('Tournage'+(ans.nb_jours?' ('+ans.nb_jours+')':''),23,y);
-    doc.setTextColor(A[0],A[1],A[2]);doc.text('A tarifer',165,y);y+=7;
-    if(ans.lieu){doc.setTextColor(MU[0],MU[1],MU[2]);doc.text('  Lieu : '+ans.lieu,23,y);y+=6;}
+
+  async function sendMessage(userMsg) {
+    if (!userMsg.trim() || convDone) return;
+    inpEl.value = '';
+    sndEl.disabled = true;
+    addMsg(userMsg, 'u');
+    showTyping();
+    var reply = await callGemini(userMsg);
+    hideTyping();
+
+    if (parseBrief(reply)) {
+      convDone = true;
+      var visibleReply = reply.replace(/\[BRIEF_COMPLET\][\s\S]*/, '').trim();
+      if (!visibleReply) visibleReply = 'Merci ! Votre brief est complet. Sofiane reviendra vers vous rapidement.';
+      addMsg(visibleReply, 'b');
+      await sleep(600);
+      showDevisBtn();
+    } else {
+      addMsg(reply, 'b');
+      sndEl.disabled = false;
+      inpEl.focus();
+    }
   }
-  if(tp2.indexOf('post')>-1||tp2.indexOf('deux')>-1){
-    (ans.sous_prestations||'Post-production').split(', ').filter(Boolean).forEach(function(s){
-      doc.setFillColor(20,20,20);doc.rect(20,y-3.5,170,6,'F');
-      doc.setTextColor(W[0],W[1],W[2]);doc.text(s,23,y);
-      doc.setTextColor(A[0],A[1],A[2]);doc.text('A tarifer',165,y);y+=7;
-    });
-    if(ans.format_source){doc.setTextColor(MU[0],MU[1],MU[2]);doc.text('  Format rushes : '+ans.format_source,23,y);y+=6;}
+
+  function showDevisBtn() {
+    var d = document.createElement('div');
+    d.className = 'msg b';
+    d.innerHTML = '<div class="ico">&#129302;</div><div class="bub" style="background:transparent;border:none;padding:0">' +
+      '<button class="bmain" id="devisBtn" style="font-size:.72rem;padding:.8rem 1.4rem;border:none;cursor:pointer;">Voir mon devis preliminaire</button></div>';
+    msgsEl.appendChild(d);
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+    document.getElementById('devisBtn').onclick = showDevis;
   }
-  y+=6;
-  doc.setFillColor(30,8,4);doc.rect(20,y-5,170,12,'F');
-  doc.setDrawColor(A[0],A[1],A[2]);doc.rect(20,y-5,170,12,'S');
-  doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(W[0],W[1],W[2]);doc.text('TOTAL ESTIME HT',24,y+2);
-  doc.setFontSize(8);doc.setTextColor(A[0],A[1],A[2]);doc.text('A definir par Sofiane',142,y+2);
-  y+=18;
-  doc.setFont('helvetica','italic');doc.setFontSize(7);doc.setTextColor(MU[0],MU[1],MU[2]);
-  doc.text('Devis preliminaire non contractuel. MZK Creation — sofiane.crea@gmail.com',20,y);
-  doc.setFillColor(A[0],A[1],A[2]);doc.rect(0,292,210,2,'F');
-  doc.save('Devis-'+REF+'.pdf');
-  notify('PDF telecharge !');
-};
-function buildEmail(){
-  var matos=getMatos();
-  var tp3=(ans.type_presta||'').toLowerCase();
-  var pStr='';
-  if(tp3.indexOf('tournage')>-1)pStr+='Tournage'+(ans.nb_jours?' ('+ans.nb_jours+')':'')+' — A tarifer\n';
-  if(tp3.indexOf('post')>-1||tp3.indexOf('deux')>-1)(ans.sous_prestations||'Post-production').split(', ').filter(Boolean).forEach(function(s){pStr+=s+' — A tarifer\n';});
-  var sep='================================================';
-  return 'NOUVEAU PROJET — MZK CREATION\nRef. '+REF+' — '+new Date().toLocaleDateString('fr-FR')+'\n'+sep+'\n\n'+
-    'CLIENT\nNom           : '+(ans.nom||'—')+'\nTelephone     : '+(ans.telephone||'—')+'\nEmail         : '+(ans.email||'—')+'\nSociete       : '+(ans.societe||'Particulier')+'\n\n'+
-    'PROJET\nDescription   : '+(ans.projet||'—')+'\nPrestation    : '+(ans.type_presta||'—')+'\n'+
-    (ans.details_tournage?'Det. tournage : '+ans.details_tournage+'\n':'')+
-    (ans.format_source?'Format rushes : '+ans.format_source+'\n':'')+
-    (ans.sources?'Sources       : '+ans.sources+'\n':'')+
-    (ans.lieu?'Lieu          : '+ans.lieu+'\n':'')+
-    (ans.nb_jours?'Jours         : '+ans.nb_jours+'\n':'')+
-    'Ratio         : '+(ans.ratio||'—')+'\nQualite       : '+(ans.qualite||'—')+'\nDiffusion     : '+(ans.diffusion||'—')+'\nDuree         : '+(ans.duree||'—')+'\nDeadline      : '+(ans.deadline||'—')+'\n'+
-    'BUDGET CLIENT : '+(ans.budget||'—')+' <— pour negociation\n'+
-    (ans.refs?'References    : '+ans.refs+'\n':'')+
-    (ans.extra?'Infos sup.    : '+ans.extra+'\n':'')+
-    '\nPRESTATIONS\n'+pStr+
-    '\nMATERIEL A PREVOIR\n'+
-    (matos.length?matos.map(function(m){return m.name+' — '+m.note;}).join('\n'):'A definir')+
-    '\n\nTARIFS : A completer\n'+sep+'\nMZK Creation — mzk-creation.fr';
-}
-window.sendMail=function(){
-  var sub=encodeURIComponent('[MZK] Nouveau projet — '+(ans.nom||'Client')+' — '+REF);
-  var body=encodeURIComponent(buildEmail().replace(/\\n/g,'\n'));
-  window.open('mailto:'+MAIL+'?subject='+sub+'&body='+body);
-  notify('Client mail ouvert !');
-};
-function notify(msg){
-  var n=document.getElementById('notif');
-  n.textContent=msg;n.classList.add('show');
-  setTimeout(function(){n.classList.remove('show');},4000);
-}
-flowSteps=BASE_START.slice();
-(async function(){await sleep(400);await ask(0);})();
+
+  // INIT - premier message de l'IA
+  (async function() {
+    await sleep(500);
+    showTyping();
+    var intro = await callGemini('Bonjour, je souhaite deposer un projet.');
+    hideTyping();
+    addMsg(intro, 'b');
+    inpEl.focus();
+  })();
+
+  sndEl.onclick = function() { sendMessage(inpEl.value); };
+  inpEl.addEventListener('keydown', function(e) { if (e.key === 'Enter') sendMessage(inpEl.value); });
+
+  // DEVIS MODAL
+  function showDevis() {
+    var tp = (brief.type_presta || '').toLowerCase();
+    var sp = brief.sous_prestations || '';
+    var pLines = '';
+    if (tp.indexOf('tournage') > -1) {
+      pLines += '<div class="dr"><span class="l">Tournage</span><span class="p">A tarifer</span></div>';
+      if (brief.nb_jours) pLines += '<div class="dr"><span class="l">Duree</span><span class="v">' + brief.nb_jours + '</span></div>';
+      if (brief.lieu) pLines += '<div class="dr"><span class="l">Lieu</span><span class="v">' + brief.lieu + '</span></div>';
+    }
+    if (tp.indexOf('post') > -1 || tp.indexOf('deux') > -1 || tp.indexOf('production') > -1) {
+      (sp || 'Post-production').split(/,|\//).map(function(s){ return s.trim(); }).filter(Boolean).forEach(function(s) {
+        pLines += '<div class="dr"><span class="l">' + s + '</span><span class="p">A tarifer</span></div>';
+      });
+      if (brief.format_source) pLines += '<div class="dr"><span class="l">Format rushes</span><span class="v">' + brief.format_source + '</span></div>';
+    }
+    var date = new Date().toLocaleDateString('fr-FR');
+    document.getElementById('mb').innerHTML =
+      '<div class="ds"><h4>Client</h4>' +
+      '<div class="dr"><span class="l">Nom</span><span class="v">' + (brief.nom||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Telephone</span><span class="v">' + (brief.telephone||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Email</span><span class="v">' + (brief.email||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Societe</span><span class="v">' + (brief.societe||'Particulier') + '</span></div></div>' +
+      '<div class="ds"><h4>Projet</h4>' +
+      '<div class="dr" style="flex-direction:column;align-items:flex-start;gap:.3rem;border:none"><span class="l">Description</span><span class="v" style="font-family:sans-serif;max-width:100%;text-align:left;margin-top:.2rem;line-height:1.5">' + (brief.projet||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Prestation</span><span class="v">' + (brief.type_presta||'—') + '</span></div>' +
+      (brief.details_tournage ? '<div class="dr"><span class="l">Details tournage</span><span class="v">'+brief.details_tournage+'</span></div>' : '') +
+      (brief.sources ? '<div class="dr"><span class="l">Fichiers sources</span><span class="v">'+brief.sources+'</span></div>' : '') +
+      '<div class="dr"><span class="l">Ratio</span><span class="v">' + (brief.ratio||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Qualite</span><span class="v">' + (brief.qualite||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Diffusion</span><span class="v">' + (brief.diffusion||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Duree</span><span class="v">' + (brief.duree||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Deadline</span><span class="v">' + (brief.deadline||'—') + '</span></div>' +
+      '<div class="dr"><span class="l">Budget</span><span class="v" style="color:var(--gold)">' + (brief.budget||'—') + '</span></div>' +
+      (brief.refs ? '<div class="dr"><span class="l">References</span><span class="v">'+brief.refs+'</span></div>' : '') +
+      (brief.extra ? '<div class="dr"><span class="l">Infos sup.</span><span class="v">'+brief.extra+'</span></div>' : '') +
+      '</div>' +
+      '<div class="ds"><h4>Prestations demandees</h4>' + pLines + '</div>' +
+      '<div class="dtot"><span class="tl">TOTAL ESTIME HT</span><span class="tv">A definir par Sofiane</span></div>' +
+      '<div class="dn">Devis preliminaire non contractuel. Ref. ' + REF + ' — ' + date + '</div>';
+    document.getElementById('ov').classList.add('on');
+  }
+
+  document.getElementById('closeBtn').onclick = function() {
+    document.getElementById('ov').classList.remove('on');
+  };
+
+  document.getElementById('pdfBtn').onclick = function() {
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    var BG=[7,7,7], W=[240,237,230], A=[255,60,0], MU=[100,100,100], G=[255,215,0];
+    doc.setFillColor(BG[0],BG[1],BG[2]); doc.rect(0,0,210,297,'F');
+    doc.setFillColor(A[0],A[1],A[2]); doc.rect(0,0,210,2,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(22); doc.setTextColor(W[0],W[1],W[2]);
+    doc.text('MZK CREATION', 20, 20);
+    doc.setFontSize(7.5); doc.setFont('helvetica','normal'); doc.setTextColor(MU[0],MU[1],MU[2]);
+    doc.text('DEVIS PRELIMINAIRE NON CONTRACTUEL', 20, 28);
+    doc.text('Ref. ' + REF + ' — ' + new Date().toLocaleDateString('fr-FR'), 20, 34);
+    doc.setFillColor(A[0],A[1],A[2]); doc.rect(0,40,210,.5,'F');
+    var y = 50;
+    function sec(t) { doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(A[0],A[1],A[2]); doc.text(t,20,y); y+=5; doc.setFont('helvetica','normal'); doc.setFontSize(8.5); }
+    function row(l,v,rc,gc,bc) { if(!v)return; doc.setTextColor(MU[0],MU[1],MU[2]); doc.text(l,22,y); doc.setTextColor(rc||W[0],gc||W[1],bc||W[2]); var ln=doc.splitTextToSize(String(v),100); doc.text(ln,80,y); y+=ln.length*5+2; }
+    sec('CLIENT');
+    row('Nom', brief.nom); row('Telephone', brief.telephone); row('Email', brief.email); row('Societe', brief.societe||'Particulier'); y+=3;
+    sec('PROJET');
+    row('Description', brief.projet); row('Prestation', brief.type_presta);
+    if(brief.details_tournage) row('Details tournage', brief.details_tournage);
+    if(brief.format_source) row('Format rushes', brief.format_source);
+    row('Ratio', brief.ratio); row('Qualite', brief.qualite); row('Diffusion', brief.diffusion);
+    row('Duree', brief.duree); row('Deadline', brief.deadline);
+    row('Budget', brief.budget, G[0],G[1],G[2]);
+    if(brief.refs) row('References', brief.refs);
+    if(brief.extra) row('Infos sup.', brief.extra);
+    y+=3;
+    sec('PRESTATIONS');
+    var tp2 = (brief.type_presta||'').toLowerCase();
+    if(tp2.indexOf('tournage')>-1) { doc.setFillColor(20,20,20); doc.rect(20,y-3.5,170,6,'F'); doc.setTextColor(W[0],W[1],W[2]); doc.text('Tournage'+(brief.nb_jours?' ('+brief.nb_jours+')':''),23,y); doc.setTextColor(A[0],A[1],A[2]); doc.text('A tarifer',165,y); y+=7; }
+    if(tp2.indexOf('post')>-1||tp2.indexOf('deux')>-1||tp2.indexOf('production')>-1) {
+      (brief.sous_prestations||'Post-production').split(/,|\//).map(function(s){return s.trim();}).filter(Boolean).forEach(function(s){ doc.setFillColor(20,20,20); doc.rect(20,y-3.5,170,6,'F'); doc.setTextColor(W[0],W[1],W[2]); doc.text(s,23,y); doc.setTextColor(A[0],A[1],A[2]); doc.text('A tarifer',165,y); y+=7; });
+    }
+    y+=6;
+    doc.setFillColor(30,8,4); doc.rect(20,y-5,170,12,'F');
+    doc.setDrawColor(A[0],A[1],A[2]); doc.rect(20,y-5,170,12,'S');
+    doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(W[0],W[1],W[2]); doc.text('TOTAL ESTIME HT',24,y+2);
+    doc.setFontSize(8); doc.setTextColor(A[0],A[1],A[2]); doc.text('A definir par Sofiane',142,y+2);
+    y+=18;
+    doc.setFont('helvetica','italic'); doc.setFontSize(7); doc.setTextColor(MU[0],MU[1],MU[2]);
+    doc.text('Devis preliminaire non contractuel. MZK Creation — sofiane.crea@gmail.com', 20, y);
+    doc.setFillColor(A[0],A[1],A[2]); doc.rect(0,292,210,2,'F');
+    doc.save('Devis-' + REF + '.pdf');
+    notify('PDF telecharge !');
+  };
+
+  document.getElementById('mailBtn').onclick = function() {
+    var lines = [
+      'NOUVEAU PROJET — MZK CREATION',
+      'Ref. ' + REF + ' — ' + new Date().toLocaleDateString('fr-FR'),
+      '================================================',
+      '',
+      'CLIENT',
+      'Nom           : ' + (brief.nom||'—'),
+      'Telephone     : ' + (brief.telephone||'—'),
+      'Email         : ' + (brief.email||'—'),
+      'Societe       : ' + (brief.societe||'Particulier'),
+      '',
+      'PROJET',
+      'Description   : ' + (brief.projet||'—'),
+      'Prestation    : ' + (brief.type_presta||'—'),
+      brief.details_tournage ? 'Det. tournage : ' + brief.details_tournage : '',
+      brief.lieu ? 'Lieu          : ' + brief.lieu : '',
+      brief.nb_jours ? 'Jours         : ' + brief.nb_jours : '',
+      brief.sous_prestations ? 'Sous-presta   : ' + brief.sous_prestations : '',
+      brief.format_source ? 'Format rushes : ' + brief.format_source : '',
+      'Ratio         : ' + (brief.ratio||'—'),
+      'Qualite       : ' + (brief.qualite||'—'),
+      'Diffusion     : ' + (brief.diffusion||'—'),
+      'Duree         : ' + (brief.duree||'—'),
+      'Deadline      : ' + (brief.deadline||'—'),
+      'BUDGET CLIENT : ' + (brief.budget||'—') + ' <- pour ta negociation',
+      brief.refs ? 'References    : ' + brief.refs : '',
+      brief.extra ? 'Infos sup.    : ' + brief.extra : '',
+      '',
+      '================================================',
+      'MZK Creation — mzk-creation.fr'
+    ].filter(function(l){ return l !== null && l !== undefined; }).join('
+');
+    var sub = encodeURIComponent('[MZK] Nouveau projet — ' + (brief.nom||'Client') + ' — ' + REF);
+    var body = encodeURIComponent(lines);
+    window.open('mailto:' + MAIL + '?subject=' + sub + '&body=' + body);
+    notify('Email ouvert !');
+  };
+
+  function notify(msg) {
+    var n = document.getElementById('notif');
+    n.textContent = msg; n.classList.add('show');
+    setTimeout(function(){ n.classList.remove('show'); }, 4000);
+  }
+
 })();
 </script>
 </body>
