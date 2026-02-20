@@ -271,7 +271,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
 
   // CONFIG
   var GEMINI_KEY = 'AIzaSyBpJk4L0JbFXQelwLyPKUfcsNCbZbOB_EY';
-  var GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=' + GEMINI_KEY;
+  var GEMINI_URL = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=' + GEMINI_KEY;
   var MAIL = 'sofiane.crea@gmail.com';
   var REF = 'MZK-' + Date.now().toString().slice(-6);
 
@@ -313,9 +313,9 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   }
 
   async function callGemini(userMsg) {
-    history.push({ role: 'user', parts: [{ text: userMsg }] });
+    var msgToSend = history.length === 0 ? SYSTEM_PROMPT + '\n\nMessage du client: ' + userMsg : userMsg;
+    history.push({ role: 'user', parts: [{ text: msgToSend }] });
     var payload = {
-      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
       contents: history
     };
     try {
