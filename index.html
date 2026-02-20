@@ -282,7 +282,8 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   var brief = {};
   var convDone = false;
 
-var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role : collecter des infos pour un brief projet. REGLES STRICTES : 1) Pose UNE seule question a la fois, tres courte (1 phrase max). 2) Si le client repond autre chose qu'une reponse a ta question, reponds uniquement : 'Merci de repondre a la question : [repete la question]'. 3) Aucun commentaire, aucune phrase de remplissage, aucune explication. Juste la question suivante. 4) Jamais plus de 2 phrases dans ta reponse. Collecte dans cet ordre : 1.Nom et prenom 2.Telephone 3.Email 4.Societe ou Particulier 5.Description du projet (contexte, objectif, public, ton) 6.Type prestation: Tournage / Post-production / Les deux 7.Si tournage: type captation, lieu, nb jours 8.Si post-prod: sous-prestations parmi Montage, Etalonnage, Motion Design, VFX, 3D, Animation, IA Generative, Sous-titres 9.Si post-prod: format rushes S-Log RAW ou REC709 10.Ratio 16:9 ou 9:16 ou 1:1 11.Qualite 1080p ou 4K ou 6K 12.Plateformes de diffusion 13.Duree contenu 14.Deadline 15.Budget parmi: -100EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier 16.References visuelles 17.Infos complementaires. Quand tout est collecte, ecris [BRIEF_COMPLET] puis un JSON sur une ligne avec: nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra. Reponds toujours en francais. Si le message est 'START', reponds uniquement : 'Votre nom et prenom ?'";
+  var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role : collecter des infos pour un brief projet. REGLES STRICTES : 1) Pose UNE seule question a la fois, tres courte (1 phrase max). 2) Si le client repond autre chose qu'une reponse a ta question, reponds uniquement : 'Merci de repondre a la question : [repete la question]'. 3) Aucun commentaire, aucune phrase de remplissage, aucune explication. Juste la question suivante. 4) Jamais plus de 2 phrases dans ta reponse. Collecte dans cet ordre : 1.Nom et prenom 2.Telephone 3.Email 4.Societe ou Particulier 5.Description du projet (contexte, objectif, public, ton) 6.Type prestation: Tournage / Post-production / Les deux 7.Si tournage: type captation, lieu, nb jours 8.Si post-prod: sous-prestations parmi Montage, Etalonnage, Motion Design, VFX, 3D, Animation, IA Generative, Sous-titres 9.Si post-prod: format rushes S-Log RAW ou REC709 10.Ratio 16:9 ou 9:16 ou 1:1 11.Qualite 1080p ou 4K ou 6K 12.Plateformes de diffusion 13.Duree contenu 14.Deadline 15.Budget parmi: -100EUR / 100-300 / 300-500 / 500-1500 / 1500-3000 / 3000-5000 / 5000+ / A negocier 16.References visuelles 17.Infos complementaires. Quand tout est collecte, ecris [BRIEF_COMPLET] puis un JSON sur une ligne avec: nom, telephone, email, societe, projet, type_presta, details_tournage, lieu, nb_jours, sous_prestations, format_source, ratio, qualite, diffusion, duree, deadline, budget, refs, extra. Reponds toujours en francais. Si le message est 'START', reponds uniquement : 'Votre nom et prenom ?'";
+
   function sleep(ms) { return new Promise(function(r) { setTimeout(r, ms); }); }
 
   function addMsg(text, who) {
@@ -361,14 +362,7 @@ var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role
     if (parseBrief(reply)) {
       convDone = true;
       var visibleReply = reply.replace(/\[BRIEF_COMPLET\][\s\S]*/, '').trim();
-      if (parseBrief(reply)) {
-  convDone = true;
-  var visibleReply = reply.replace(/\[BRIEF_COMPLET\][\s\S]*/s, '').trim();
-  if (!visibleReply) visibleReply = 'Parfait, votre brief est complet. Sofiane revient vers vous rapidement.';
-  addMsg(visibleReply, 'b');
-  await sleep(600);
-  showDevisBtn();
-}
+      if (!visibleReply) visibleReply = 'Parfait, votre brief est complet. Sofiane revient vers vous rapidement.';
       addMsg(visibleReply, 'b');
       await sleep(600);
       showDevisBtn();
@@ -389,7 +383,7 @@ var SYSTEM_PROMPT = "Tu es l'assistant commercial de MZK Creation. Ton seul role
     document.getElementById('devisBtn').onclick = showDevis;
   }
 
-  // INIT - premier message de l'IA
+  // INIT
   (async function() {
     await sleep(500);
     showTyping();
