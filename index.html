@@ -526,6 +526,17 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     var isTournage = tp.indexOf('tournage') > -1 || tp.indexOf('deux') > -1 || tp.indexOf('les deux') > -1;
     var isPostProd = tp.indexOf('post') > -1 || tp.indexOf('deux') > -1 || tp.indexOf('les deux') > -1;
 
+    // Reconstruction du fil de conversation complet
+    var transcript = history
+      .filter(function(m) { return m.content !== 'START'; })
+      .map(function(m) {
+        var who = m.role === 'user' ? 'CLIENT' : 'ASSISTANT';
+        var text = m.content.replace(/\[BRIEF_COMPLET\][\s\S]*/,'').trim();
+        return text ? who + ' : ' + text : null;
+      })
+      .filter(Boolean)
+      .join('\n\n');
+
     // Email client (recap)
     try {
       await emailjs.send('service_drxsh2d', 'template_5cpc9y2', {
@@ -538,11 +549,20 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
         client_societe: brief.societe||'Particulier',
         projet_description: brief.projet||'—',
         projet_type: brief.type_presta||'—',
+        projet_details_tournage: isTournage ? (brief.details_tournage||'—') : 'N/A',
+        projet_lieu: isTournage ? (brief.lieu||'—') : 'N/A',
+        projet_nb_jours: isTournage ? (brief.nb_jours||'—') : 'N/A',
+        projet_sous_prestations: isPostProd ? (brief.sous_prestations||'—') : 'N/A',
+        projet_format_source: isPostProd ? (brief.format_source||'—') : 'N/A',
         projet_ratio: brief.ratio||'—',
         projet_qualite: brief.qualite||'—',
         projet_diffusion: brief.diffusion||'—',
         projet_duree: brief.duree||'—',
-        projet_deadline: brief.deadline||'—'
+        projet_deadline: brief.deadline||'—',
+        projet_budget: brief.budget||'—',
+        projet_refs: brief.refs||'—',
+        projet_extra: brief.extra||'—',
+        conversation: transcript
       });
     } catch(e) { console.error('Email client:', e); }
 
@@ -637,7 +657,8 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
         estim_recommandation: estim.reco,
         verdict_class: verdictClass,
         verdict_tag: verdictTag,
-        verdict_analyse: estim.analyse
+        verdict_analyse: estim.analyse,
+        conversation: transcript
       });
     } catch(e) { console.error('Email Sofiane:', e); }
   }
