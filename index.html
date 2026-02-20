@@ -219,7 +219,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     <div class="widget">
       <div class="wh">
         <div class="av">MZK</div>
-        <div class="wi"><h4>Assistant MZK Creation</h4><p>&#9679; Powered by Gemini AI</p></div>
+        <div class="wi"><h4>Assistant MZK Creation</h4><p>&#9679; Powered by Groq AI</p></div>
       </div>
       <div class="msgs" id="msgs"></div>
       <div class="win">
@@ -270,8 +270,8 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   }, 1800);
 
   // CONFIG
-  var GEMINI_KEY = 'AIzaSyC7_fj5VxGgkW8R_2f3MvQv8H0QziaKenQ';
-  var GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY;
+  var GROQ_KEY = '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';
+  var GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
   var MAIL = 'sofiane.crea@gmail.com';
   var REF = 'MZK-' + Date.now().toString().slice(-6);
 
@@ -312,22 +312,27 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     if (t) t.remove();
   }
 
-  async function callGemini(userMsg) {
-    var msgToSend = history.length === 0 ? SYSTEM_PROMPT + '\n\nMessage du client: ' + userMsg : userMsg;
-    history.push({ role: 'user', parts: [{ text: msgToSend }] });
+  async function callGroq(userMsg) {
+    history.push({ role: 'user', content: userMsg });
     var payload = {
-      contents: history
+      model: 'llama3-8b-8192',
+      messages: [{ role: 'system', content: SYSTEM_PROMPT }].concat(history),
+      temperature: 0.7,
+      max_tokens: 500
     };
     try {
-      var res = await fetch(GEMINI_URL, {
+      var res = await fetch(GROQ_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + GROQ_KEY
+        },
         body: JSON.stringify(payload)
       });
       var data = await res.json();
       if (data.error) throw new Error(data.error.message);
-      var reply = data.candidates[0].content.parts[0].text;
-      history.push({ role: 'model', parts: [{ text: reply }] });
+      var reply = data.choices[0].message.content;
+      history.push({ role: 'assistant', content: reply });
       return reply;
     } catch(e) {
       return 'Desolee, une erreur est survenue. Veuillez reessayer. (' + e.message + ')';
@@ -351,7 +356,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
     sndEl.disabled = true;
     addMsg(userMsg, 'u');
     showTyping();
-    var reply = await callGemini(userMsg);
+    var reply = await callGroq(userMsg);
     hideTyping();
 
     if (parseBrief(reply)) {
@@ -382,7 +387,7 @@ footer p{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--muted);
   (async function() {
     await sleep(500);
     showTyping();
-    var intro = await callGemini('Bonjour, je souhaite deposer un projet.');
+    var intro = await callGroq('Bonjour, je souhaite deposer un projet.');
     hideTyping();
     addMsg(intro, 'b');
     inpEl.focus();
